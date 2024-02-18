@@ -3,7 +3,7 @@ import * as S from './style';
 type DividerProps = {
   margin: string;
 };
-export default function Divider(props: DividerProps) {
+export default function DividerComponent(props: DividerProps) {
   const {margin} = props;
   return <S.DividerContainer margin={margin} />;
 }
