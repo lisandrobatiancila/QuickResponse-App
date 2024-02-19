@@ -5,15 +5,17 @@ type TextProps = {
   fontWeight?: string;
   fontSize?: number;
   textAlign?: string;
+  textColor?: string;
 };
 
-export default function TextComponent(props: TextProps) {
-  const {title, fontWeight, fontSize, textAlign} = props;
+export default function TextLabel(props: TextProps) {
+  const {title, fontWeight, fontSize, textAlign, textColor} = props;
   return (
     <S.TextContainer
       fontWeight={fontWeight}
       fontSize={fontSize}
-      textAlign={textAlign}>
+      textAlign={textAlign}
+      textColor={textColor}>
       {title}
     </S.TextContainer>
   );
