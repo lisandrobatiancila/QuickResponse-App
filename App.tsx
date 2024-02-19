@@ -18,7 +18,13 @@ function App() {
             title: 'QR-App',
           }}
         />
-        <StackNavigator.Screen name="Login" component={Login} />
+        <StackNavigator.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerBackVisible: false,
+          }}
+        />
         <StackNavigator.Screen name="Register" component={Registration} />
       </StackNavigator.Navigator>
     </NavigationContainer>

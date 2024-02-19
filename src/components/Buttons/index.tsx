@@ -1,18 +1,19 @@
 import React from 'react';
 import * as S from './style';
-import TextComponent from '../Text';
+import TextComponent from '../TextLabel';
 
 type ButtonContainerProps = {
   title?: string;
   backgroundColor?: string;
   textColor?: string;
   fontWeight?: string;
-  fontSize?: string;
+  fontSize?: number;
   textAlign?: string;
   margin?: string;
   alignSelf?: string;
   padding?: string;
   borderRadius?: string;
+  width?: number;
   onPress?: () => void;
 };
 
@@ -28,6 +29,7 @@ export const ButtonComponent = (props: ButtonContainerProps) => {
     alignSelf,
     padding,
     borderRadius,
+    width,
     onPress,
   } = props;
 
@@ -40,9 +42,16 @@ export const ButtonComponent = (props: ButtonContainerProps) => {
       fontWeight={fontWeight}
       fontSize={fontSize}
       margin={margin}
+      width={width}
       onPress={onPress}
       padding={padding}>
-      <TextComponent title={title} textAlign={textAlign} />
+      <TextComponent
+        title={title}
+        textAlign={textAlign}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        textColor={textColor}
+      />
     </S.ButtonContainer>
   );
 };
