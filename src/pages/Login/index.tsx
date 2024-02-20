@@ -11,7 +11,7 @@ import TextLabel from '../../components/TextLabel';
 
 export default function Login(props: any) {
   const {navigation} = props;
-
+  
   const onSignup = () => {
     navigation.navigate('Register');
   };
