@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect } from 'react';
 import DividerComponent from '../../components/Divider';
 import {ButtonComponent} from '../../components/Buttons';
 import {Dimensions, ScrollView, View} from 'react-native';
@@ -7,8 +7,22 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
+import { useUserCredentials } from '../../hooks/useUserHooks';
 
 export default function Registration() {
+  const {sendRegisterQRUser} = useUserCredentials();
+  useEffect(() => {
+    sendRegisterQRUser({
+      firstname:    "string",
+      middlename:   "string",
+      lastname:     "string",
+      mobilenumber: "string",
+      address:      "string",
+      email:        "string",
+      password:     "string",
+      isActive:     1
+    });
+  }, []);
   return (
     <>
       <ScrollView>
