@@ -1,35 +1,45 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect } from 'react';
-import DividerComponent from '../../components/Divider';
+import React from 'react';
 import {ButtonComponent} from '../../components/Buttons';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Alert, Dimensions, ScrollView, ToastAndroid, View} from 'react-native';
 import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
-import { useUserCredentials } from '../../hooks/useUserHooks';
+import {useUserCredentials} from '../../hooks/useUserHooks';
+import {RegistrationDTO} from '../../types/Registration.type';
+import {Formik} from 'formik';
 
 export default function Registration() {
   const {sendRegisterQRUser} = useUserCredentials();
-  useEffect(() => {
-    sendRegisterQRUser({
-      firstname:    "string",
-      middlename:   "string",
-      lastname:     "string",
-      mobilenumber: "string",
-      address:      "string",
-      email:        "string",
-      password:     "string",
-      isActive:     1
-    });
-  }, []);
+  const initValues: RegistrationDTO = {
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    mobilenumber: '',
+    address: '',
+    email: '',
+    password: '',
+    isActive: 1,
+  };
+
+  const onRegister = (values: RegistrationDTO) => {
+    sendRegisterQRUser(values)
+      .then(() => {
+        ToastAndroid.show('New user was created', ToastAndroid.SHORT);
+      })
+      .catch((error: any) => {
+        Alert.alert('Something went wrong', error?.message);
+      });
+  };
+
   return (
     <>
       <ScrollView>
         <View
           style={{
             justifyContent: 'center',
-            height: Dimensions.get('window').height - 150,
+            height: Dimensions.get('window').height - 100,
             padding: 10,
           }}>
           <DivComponent alignItems="center">
@@ -39,43 +49,75 @@ export default function Registration() {
               height={100}
             />
           </DivComponent>
-          <DividerComponent margin="20px 0 0 0" />
-          <TextInputComponent
-            label="Fullname"
-            borderRadius={10}
-            textMode={TextInputEnum.OUTLINED}
-          />
-          <TextInputComponent
-            label="Address"
-            borderRadius={10}
-            textMode={TextInputEnum.OUTLINED}
-          />
-          <TextInputComponent
-            label="Contact No."
-            borderRadius={10}
-            textMode={TextInputEnum.OUTLINED}
-          />
-          <TextInputComponent
-            label="Email"
-            borderRadius={10}
-            textMode={TextInputEnum.OUTLINED}
-          />
-          <TextInputComponent
-            label="Password"
-            borderRadius={10}
-            textMode={TextInputEnum.OUTLINED}
-          />
-          <ButtonComponent
-            alignSelf="center"
-            backgroundColor="#D11042"
-            borderRadius="10"
-            title="Sign up"
-            textAlign="center"
-            margin="80px 0 0 0"
-            padding="10"
-            fontSize={18}
-            width={60}
-          />
+          <Formik
+            initialValues={initValues}
+            onSubmit={(values, {resetForm}) => {
+              resetForm();
+              onRegister(values);
+            }}>
+            {({handleChange, handleSubmit, values}) => (
+              <>
+                <TextInputComponent
+                  label="Firstname"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  value={values.firstname}
+                  onChangeText={handleChange('firstname')}
+                />
+                <TextInputComponent
+                  label="Middlename"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('middlename')}
+                />
+                <TextInputComponent
+                  label="Lastname"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('lastname')}
+                />
+                <TextInputComponent
+                  label="Contact No."
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('mobilenumber')}
+                  keyboardType="phone-pad"
+                />
+                <TextInputComponent
+                  label="Address"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('address')}
+                />
+                <TextInputComponent
+                  label="Email"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('email')}
+                  keyboardType="email-address"
+                />
+                <TextInputComponent
+                  label="Password"
+                  borderRadius={10}
+                  textMode={TextInputEnum.OUTLINED}
+                  onChangeText={handleChange('password')}
+                  secureTextEntry
+                />
+                <ButtonComponent
+                  alignSelf="center"
+                  backgroundColor="#D11042"
+                  borderRadius="10"
+                  title="Sign up"
+                  textAlign="center"
+                  margin="30px 0 0 0"
+                  padding="10"
+                  fontSize={18}
+                  width={60}
+                  onPress={handleSubmit}
+                />
+              </>
+            )}
+          </Formik>
         </View>
       </ScrollView>
     </>
