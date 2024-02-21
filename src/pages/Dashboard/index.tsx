@@ -1,13 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DashBoardAlerts from './Alerts';
-import DashBoardNewsFeed from './NewsFeed';
 import {DASHBOARD} from '../../constants/string';
 import HomeDashBoard from './Home';
 import FirstAidDashBoard from './FirstAids';
 import ProfileDashBoard from './Profile';
-import {Icon} from 'react-native-paper';
-import {Image} from 'react-native';
+import NewsFeedDashBoard from './NewsFeed';
 
 const BottomTabNavigation = createBottomTabNavigator();
 
@@ -23,7 +21,7 @@ export default function DashBoard() {
       />
       <BottomTabNavigation.Screen
         name={DASHBOARD.NEWS_FEEDS.name}
-        component={DashBoardNewsFeed}
+        component={NewsFeedDashBoard}
         options={{
           title: DASHBOARD.NEWS_FEEDS.headerTitle,
         }}

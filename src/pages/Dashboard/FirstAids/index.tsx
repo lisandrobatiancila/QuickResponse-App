@@ -5,7 +5,7 @@ import TextLabel from '../../../components/TextLabel';
 export default function FirstAidDashBoard() {
   return (
     <View>
-      <TextLabel title="Welcome to first aids" />
+      <TextLabel title="Welcome to first aid" />
     </View>
   );
 }
