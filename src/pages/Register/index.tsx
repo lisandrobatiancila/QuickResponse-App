@@ -7,7 +7,7 @@ import TextInputEnum from '../../enums/TextInput.enum';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
 import {useUserCredentials} from '../../hooks/useUserHooks';
-import {RegistrationDTO} from '../../types/Registration.type';
+import {RegistrationDTO} from '../../types/User.type';
 import {Formik} from 'formik';
 
 export default function Registration() {

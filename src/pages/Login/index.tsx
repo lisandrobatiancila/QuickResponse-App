@@ -1,4 +1,4 @@
-import React, {View, ScrollView} from 'react-native';
+import React, {View, ScrollView, Alert, ToastAndroid} from 'react-native';
 import TextComponent from '../../components/TextLabel';
 import ImageComponent from '../../components/ImageContainer';
 import {APP_HEIGHT, APP_WIDTH} from '../../constants/dimensions';
@@ -7,17 +7,37 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
+import {LoginDTO} from '../../types/User.type';
+import {useUserCredentials} from '../../hooks/useUserHooks';
 import DividerComponent from '../../components/Divider';
+import {Formik} from 'formik';
 
 export default function Login(props: any) {
+  const {sendLoginQRUser} = useUserCredentials();
+
+  const initValues: LoginDTO = {
+    email: '',
+    password: '',
+  };
+
   const {navigation} = props;
 
   const onSignup = () => {
     navigation.navigate('Register');
   };
 
-  const onGoToDashboard = () => {
-    navigation.navigate('Dashboard');
+  const onLoginUser = (values: LoginDTO) => {
+    sendLoginQRUser(values)
+      .then((response: any) => {
+        if (response.length === 0) {
+          ToastAndroid.show('Invalid credentials', ToastAndroid.LONG);
+          return;
+        }
+        navigation.navigate('Dashboard');
+      })
+      .catch((error: any) => {
+        Alert.alert('Something went wrong', error?.message);
+      });
   };
 
   return (
@@ -37,30 +57,44 @@ export default function Login(props: any) {
             fontSize={32}
             textAlign="center"
           />
-          <DivComponent padding="10">
-            <DividerComponent margin="20px 0 0 0" />
-            <TextInputComponent
-              label="Email"
-              borderRadius={10}
-              textMode={TextInputEnum.OUTLINED}
-            />
-            <TextInputComponent
-              label="Password"
-              borderRadius={10}
-              textMode={TextInputEnum.OUTLINED}
-            />
-          </DivComponent>
-          <ButtonComponent
-            alignSelf="center"
-            borderRadius="10"
-            fontSize={18}
-            title="Log in"
-            textAlign="center"
-            backgroundColor="#D11042"
-            margin="40px 0 0 0"
-            padding="15"
-            onPress={onGoToDashboard}
-          />
+          <Formik
+            initialValues={initValues}
+            onSubmit={values => onLoginUser(values)}>
+            {({handleSubmit, handleChange, values}) => (
+              <>
+                <DivComponent padding="10">
+                  <DividerComponent margin="20px 0 0 0" />
+                  <TextInputComponent
+                    label="Email"
+                    borderRadius={10}
+                    textMode={TextInputEnum.OUTLINED}
+                    value={values.email}
+                    keyboardType={'email-address'}
+                    onChangeText={handleChange('email')}
+                  />
+                  <TextInputComponent
+                    label="Password"
+                    borderRadius={10}
+                    textMode={TextInputEnum.OUTLINED}
+                    value={values.password}
+                    secureTextEntry
+                    onChangeText={handleChange('password')}
+                  />
+                  <ButtonComponent
+                    alignSelf="center"
+                    borderRadius="10"
+                    fontSize={18}
+                    title="Log in"
+                    textAlign="center"
+                    backgroundColor="#D11042"
+                    margin="40px 0 0 0"
+                    padding="15"
+                    onPress={handleSubmit}
+                  />
+                </DivComponent>
+              </>
+            )}
+          </Formik>
           <DividerComponent margin="5px 0 0 0" />
           <DivComponent flexDirection="row" justifyContent="center">
             <TextLabel
