@@ -6,8 +6,8 @@ import {ButtonComponent} from '../../components/Buttons';
 import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
-import DividerComponent from '../../components/Divider';
 import TextLabel from '../../components/TextLabel';
+import DividerComponent from '../../components/Divider';
 
 export default function Login(props: any) {
   const {navigation} = props;
