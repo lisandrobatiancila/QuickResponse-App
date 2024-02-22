@@ -44,7 +44,7 @@ export default function Home(props: any) {
             fontSize={15}
             title="Let's get you Started"
             textAlign="center"
-            backgroundColor="#D11042"
+            backgroundColor={COLOR_LISTS.RED_400}
             margin="80px 0 0 0"
             padding="15"
             textColor={COLOR_LISTS.WHITE}

@@ -106,7 +106,7 @@ export default function Registration() {
                 />
                 <ButtonComponent
                   alignSelf="center"
-                  backgroundColor="#D11042"
+                  backgroundColor={COLOR_LISTS.RED_400}
                   borderRadius="10"
                   title="Sign up"
                   textAlign="center"

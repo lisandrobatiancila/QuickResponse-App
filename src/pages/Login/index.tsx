@@ -59,7 +59,7 @@ export default function Login(props: any) {
             title="Log in"
             textAlign="center"
             textColor={COLOR_LISTS.WHITE}
-            backgroundColor="#D11042"
+            backgroundColor={COLOR_LISTS.RED_400}
             margin="40px 0 0 0"
             padding="15"
             onPress={onGoToDashboard}
