@@ -7,17 +7,17 @@ export const DASHBOARD = {
   HOME: {
     name: 'Home',
     headerTitle: 'Home',
-    tabBarIcon: <FontAwesome6 name="house" size={25} color={COLOR_LISTS.CRIMSON} />,
+    tabBarIcon: <FontAwesome6 name="house" size={25} color={COLOR_LISTS.RED_500} />,
   },
   NEWS_FEEDS: {
     name: 'NewsFeed',
     headerTitle: 'News Feed',
-    tabBarIcon: <FontAwesome6 name="newspaper" size={25} color={COLOR_LISTS.YELLOW_1} />,
+    tabBarIcon: <FontAwesome6 name="newspaper" size={25} color={COLOR_LISTS.YELLOW_600} />,
   },
   ALERTS: {
     name: 'Alerts',
     headerTitle: 'Alerts',
-    tabBarIcon: <Feather name="alert-octagon" size={25} color={COLOR_LISTS.GOLD} />,
+    tabBarIcon: <Feather name="alert-octagon" size={25} color={COLOR_LISTS.AMBER_400} />,
   },
   FIRST_AID: {
     name: 'First Aid',
@@ -27,6 +27,6 @@ export const DASHBOARD = {
   PROFILE: {
     name: 'Profile',
     headerTitle: 'Profile',
-    tabBarIcon: <FontAwesome6 name='user-gear' size={25} color={COLOR_LISTS.BLUE_1} />,
+    tabBarIcon: <FontAwesome6 name='user-gear' size={25} color={COLOR_LISTS.BLUE_400} />,
   },
 };
