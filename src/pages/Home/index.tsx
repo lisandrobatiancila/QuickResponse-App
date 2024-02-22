@@ -4,6 +4,7 @@ import {ButtonComponent} from '../../components/Buttons';
 import * as S from './style';
 import {APP_WIDTH} from '../../constants/dimensions';
 import ImageComponent from '../../components/ImageContainer';
+import { COLOR_LISTS } from '../../constants/colors';
 
 export default function Home(props: any) {
   const {navigation} = props;
@@ -18,7 +19,7 @@ export default function Home(props: any) {
           borderRadius={50}
           imageSrc={require('../../assets/QRApp-img1.jpeg')}
           width={APP_WIDTH}
-          height={200}
+          height={210}
         />
         <S.HomeContainer
           justifyContent="center"
@@ -28,12 +29,14 @@ export default function Home(props: any) {
             fontWeight="bold"
             fontSize={32}
             textAlign="center"
+            textColor={COLOR_LISTS.GREY_500}
           />
           <TextComponent
             title="QR App: Emergency Quick Response"
             fontWeight="normal"
             textAlign="center"
             fontSize={18}
+            textColor={COLOR_LISTS.GREY_400}
           />
           <ButtonComponent
             alignSelf="center"
@@ -44,6 +47,7 @@ export default function Home(props: any) {
             backgroundColor="#D11042"
             margin="80px 0 0 0"
             padding="15"
+            textColor={COLOR_LISTS.WHITE}
             onPress={onGetStarted}
           />
         </S.HomeContainer>

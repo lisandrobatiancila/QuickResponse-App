@@ -8,6 +8,7 @@ import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
 import DividerComponent from '../../components/Divider';
+import {COLOR_LISTS} from '../../constants/colors';
 
 export default function Login(props: any) {
   const {navigation} = props;
@@ -36,6 +37,7 @@ export default function Login(props: any) {
             fontWeight="bold"
             fontSize={32}
             textAlign="center"
+            textColor={COLOR_LISTS.GREY_500}
           />
           <DivComponent padding="10">
             <DividerComponent margin="20px 0 0 0" />
@@ -56,6 +58,7 @@ export default function Login(props: any) {
             fontSize={18}
             title="Log in"
             textAlign="center"
+            textColor={COLOR_LISTS.WHITE}
             backgroundColor="#D11042"
             margin="40px 0 0 0"
             padding="15"
@@ -67,10 +70,11 @@ export default function Login(props: any) {
               title="Don't have an account? "
               textAlign="center"
               fontSize={15}
+              textColor={COLOR_LISTS.GREY_400}
             />
             <ButtonComponent
               title="Sign up"
-              textColor="#0000EE"
+              textColor={COLOR_LISTS.BLUE_500}
               fontWeight="bold"
               fontSize={15}
               textAlign="center"
