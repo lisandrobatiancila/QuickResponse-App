@@ -11,9 +11,13 @@ import DividerComponent from '../../components/Divider';
 
 export default function Login(props: any) {
   const {navigation} = props;
-  
+
   const onSignup = () => {
     navigation.navigate('Register');
+  };
+
+  const onGoToDashboard = () => {
+    navigation.navigate('Dashboard');
   };
 
   return (
@@ -55,6 +59,7 @@ export default function Login(props: any) {
             backgroundColor="#D11042"
             margin="40px 0 0 0"
             padding="15"
+            onPress={onGoToDashboard}
           />
           <DividerComponent margin="5px 0 0 0" />
           <DivComponent flexDirection="row" justifyContent="center">
