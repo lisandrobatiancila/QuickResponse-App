@@ -9,6 +9,7 @@ import DivComponent from '../../components/DivContainer';
 import {useUserCredentials} from '../../hooks/useUserHooks';
 import {RegistrationDTO} from '../../types/User.type';
 import {Formik} from 'formik';
+import { COLOR_LISTS } from '../../constants/colors';
 
 export default function Registration() {
   const {sendRegisterQRUser} = useUserCredentials();
@@ -105,10 +106,11 @@ export default function Registration() {
                 />
                 <ButtonComponent
                   alignSelf="center"
-                  backgroundColor="#D11042"
+                  backgroundColor={COLOR_LISTS.RED_400}
                   borderRadius="10"
                   title="Sign up"
                   textAlign="center"
+                  textColor={COLOR_LISTS.WHITE}
                   margin="30px 0 0 0"
                   padding="10"
                   fontSize={18}

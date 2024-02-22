@@ -10,6 +10,7 @@ import TextLabel from '../../components/TextLabel';
 import {LoginDTO} from '../../types/User.type';
 import {useUserCredentials} from '../../hooks/useUserHooks';
 import DividerComponent from '../../components/Divider';
+import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
 
 export default function Login(props: any) {
@@ -55,6 +56,7 @@ export default function Login(props: any) {
             fontWeight="bold"
             fontSize={32}
             textAlign="center"
+            textColor={COLOR_LISTS.GREY_500}
           />
           <Formik
             initialValues={initValues}
@@ -100,10 +102,11 @@ export default function Login(props: any) {
               title="Don't have an account? "
               textAlign="center"
               fontSize={15}
+              textColor={COLOR_LISTS.GREY_400}
             />
             <ButtonComponent
               title="Sign up"
-              textColor="#0000EE"
+              textColor={COLOR_LISTS.BLUE_500}
               fontWeight="bold"
               fontSize={15}
               textAlign="center"
