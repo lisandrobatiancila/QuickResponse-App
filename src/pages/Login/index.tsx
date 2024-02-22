@@ -26,18 +26,17 @@ export default function Login(props: any) {
     navigation.navigate('Register');
   };
 
-  const onLoginUser = (values: LoginDTO) => {
-    sendLoginQRUser(values)
-      .then((response: any) => {
-        if (response.length === 0) {
-          ToastAndroid.show('Invalid credentials', ToastAndroid.LONG);
-          return;
-        }
-        navigation.navigate('Dashboard');
-      })
-      .catch((error: any) => {
-        Alert.alert('Something went wrong', error?.message);
-      });
+  const onLoginUser = async (values: LoginDTO) => {
+    try {
+      const result = await sendLoginQRUser(values);
+      if (!result) {
+        ToastAndroid.show('Invalid credentials', ToastAndroid.SHORT);
+        return;
+      }
+      navigation.navigate('Dashboard');
+    } catch (error: any) {
+      Alert.alert('Something went wrong', error?.message);
+    }
   };
 
   return (
