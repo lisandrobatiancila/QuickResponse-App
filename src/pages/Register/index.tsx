@@ -112,7 +112,7 @@ export default function Registration() {
                   textAlign="center"
                   textColor={COLOR_LISTS.WHITE}
                   margin="30px 0 0 0"
-                  padding="10"
+                  padding="15"
                   fontSize={18}
                   width={60}
                   onPress={handleSubmit}

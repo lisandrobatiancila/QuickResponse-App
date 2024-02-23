@@ -12,11 +12,9 @@ import {useUserCredentials} from '../../hooks/useUserHooks';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
-import { useAccountContext } from '../../providers/AccountProvider';
 
 export default function Login(props: any) {
   const {sendLoginQRUser} = useUserCredentials();
-  const {setActiveUserInformation} = useAccountContext();
 
   const initValues: LoginDTO = {
     email: '',
@@ -89,7 +87,8 @@ export default function Login(props: any) {
                     fontSize={18}
                     title="Log in"
                     textAlign="center"
-                    backgroundColor="#D11042"
+                    textColor={COLOR_LISTS.WHITE}
+                    backgroundColor={COLOR_LISTS.RED_400}
                     margin="40px 0 0 0"
                     padding="15"
                     onPress={handleSubmit}
