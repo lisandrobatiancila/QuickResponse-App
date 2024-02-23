@@ -12,9 +12,11 @@ import {useUserCredentials} from '../../hooks/useUserHooks';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
+import { useAccountContext } from '../../providers/AccountProvider';
 
 export default function Login(props: any) {
   const {sendLoginQRUser} = useUserCredentials();
+  const {setActiveUserInformation} = useAccountContext();
 
   const initValues: LoginDTO = {
     email: '',

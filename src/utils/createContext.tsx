@@ -1,7 +1,15 @@
-import {createContext} from 'react';
+import {createContext, useContext} from 'react';
 
 export default function createAppContext<T>() {
-  const AppContext = createContext<T | null>(null);
+  const appContext = createContext<T | undefined>(undefined);
 
-  return [AppContext.Provider, AppContext.Consumer];
+  const useGenericContext = () => {
+    const contextIsDefined = useContext(appContext);
+
+    if (!contextIsDefined) {
+      throw new Error(`useGenericContext must be used within a Provider ${appContext}`)
+    }
+    return contextIsDefined;
+  }
+  return [useGenericContext, appContext.Provider] as const;
 }
