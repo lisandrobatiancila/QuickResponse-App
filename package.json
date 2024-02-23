@@ -10,11 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^18.9.0",
+    "@react-native-firebase/firestore": "^18.9.0",
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
-    "axios": "^1.6.7",
-    "dotenv": "^16.4.4",
     "axios": "^1.6.7",
     "dotenv": "^16.4.4",
     "formik": "^2.4.5",
