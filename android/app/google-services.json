@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1099239671312",
+    "project_id": "qrapp-53a08",
+    "storage_bucket": "qrapp-53a08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099239671312:android:0c97b9926bfd7a6ced2c95",
+        "android_client_info": {
+          "package_name": "com.qrapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsqLt_WUeOd-HYFc0CwSIcRZrROSvONmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

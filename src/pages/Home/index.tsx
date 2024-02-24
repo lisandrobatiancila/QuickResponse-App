@@ -5,13 +5,27 @@ import * as S from './style';
 import {APP_WIDTH} from '../../constants/dimensions';
 import ImageComponent from '../../components/ImageContainer';
 import { COLOR_LISTS } from '../../constants/colors';
+import { useEffect } from 'react';
+import firestore from '@react-native-firebase/firestore';
 
 export default function Home(props: any) {
   const {navigation} = props;
 
+  useEffect(() => {
+    recs();
+  }, []);
+
+  async function recs() {
+    const userColl = await firestore().collection('Students').get()
+    console.log("RES");
+    const data = userColl.docs[0].data();
+    console.log(data);
+    
+  }
   function onGetStarted() {
     navigation.navigate('Login');
   }
+
   return (
     <View>
       <View>
