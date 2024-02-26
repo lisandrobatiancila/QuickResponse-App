@@ -14,5 +14,5 @@ export const TextContainer = styled(Text)<TextProps>`
   font-weight: ${(props: TextProps) => props.fontWeight ?? 'normal'};
   font-style: ${(props: TextProps) => props.fontStyle ?? 'normal'};
   color: ${(props: TextProps) => props.textColor ?? '#000'};
-  text-align: ${(props: TextProps) => props.textAlign};
+  text-align: ${(props: TextProps) => props.textAlign ?? 'left'};
 `;
