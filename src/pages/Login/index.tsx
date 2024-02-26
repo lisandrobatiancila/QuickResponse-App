@@ -55,7 +55,6 @@ export default function Login(props: any) {
         credentials: {
           loginEmail: email,
           loginPassword: password,
-          
         }
       });
       
@@ -85,9 +84,8 @@ export default function Login(props: any) {
           />
           <Formik
             initialValues={initValues}
-            onSubmit={(values, {resetForm}) => {
+            onSubmit={(values) => {
               onLoginUser(values);
-              resetForm();
             }}>
             {({handleSubmit, handleChange, values}) => (
               <>
