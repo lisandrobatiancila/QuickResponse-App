@@ -7,19 +7,20 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
-import {LoginDTO} from '../../types/User.type';
-import {useUserCredentials} from '../../hooks/useUserHooks';
+import {LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
+import firestore, { Filter } from '@react-native-firebase/firestore';
+import { useAccountContext } from '../../providers/AccountProvider';
+import { sha256 } from 'react-native-sha256';
 
 export default function Login(props: any) {
-  const {sendLoginQRUser} = useUserCredentials();
-
   const initValues: LoginDTO = {
-    email: '',
-    password: '',
+    loginEmail: '',
+    loginPassword: '',
   };
+  const {setActiveUserInformationFunction} = useAccountContext();
 
   const {navigation} = props;
 
@@ -29,11 +30,35 @@ export default function Login(props: any) {
 
   const onLoginUser = async (values: LoginDTO) => {
     try {
-      const result = await sendLoginQRUser(values);
-      if (!result) {
-        ToastAndroid.show('Invalid credentials', ToastAndroid.SHORT);
+      const {loginEmail, loginPassword} = values;
+      const results = await firestore().collection('Users').where('email', '==', loginEmail).get();
+    
+      if (results.docs.length === 0) {
+        Alert.alert('Message', 'Invalid credentials');
         return;
       }
+      const activeUser: UserDTO = results.docs[0].data() as UserDTO;
+      const {email, password, isActive, account} = activeUser;
+      
+      const loginPassSha256 = await sha256(loginPassword);
+      
+      if (loginPassSha256 !== password) {
+        Alert.alert('Message', 'Invalid credentials');
+        return;
+      }
+
+      const {firstname, middlename, lastname, mobilenumber, address} = account;
+      setActiveUserInformationFunction({
+        account: {
+          firstname, middlename, lastname, mobilenumber, address
+        },
+        credentials: {
+          loginEmail: email,
+          loginPassword: password,
+          
+        }
+      });
+      
       navigation.navigate('Dashboard');
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
@@ -60,7 +85,10 @@ export default function Login(props: any) {
           />
           <Formik
             initialValues={initValues}
-            onSubmit={values => onLoginUser(values)}>
+            onSubmit={(values, {resetForm}) => {
+              onLoginUser(values);
+              resetForm();
+            }}>
             {({handleSubmit, handleChange, values}) => (
               <>
                 <DivComponent padding="10">
@@ -69,17 +97,17 @@ export default function Login(props: any) {
                     label="Email"
                     borderRadius={10}
                     textMode={TextInputEnum.OUTLINED}
-                    value={values.email}
+                    value={values.loginEmail}
                     keyboardType={'email-address'}
-                    onChangeText={handleChange('email')}
+                    onChangeText={handleChange('loginEmail')}
                   />
                   <TextInputComponent
                     label="Password"
                     borderRadius={10}
                     textMode={TextInputEnum.OUTLINED}
-                    value={values.password}
+                    value={values.loginPassword}
                     secureTextEntry
-                    onChangeText={handleChange('password')}
+                    onChangeText={handleChange('loginPassword')}
                   />
                   <ButtonComponent
                     alignSelf="center"
