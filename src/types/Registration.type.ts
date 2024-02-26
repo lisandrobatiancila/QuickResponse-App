@@ -6,5 +6,5 @@ export type RegistrationDTO = {
     address:      string
     email:        string
     password:     string
-    isActive:     number
+    isActive:     boolean
 }
