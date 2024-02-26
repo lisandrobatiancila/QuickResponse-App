@@ -6,13 +6,13 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
-import {useUserCredentials} from '../../hooks/useUserHooks';
-import {RegistrationDTO} from '../../types/User.type';
 import {Formik} from 'formik';
 import { COLOR_LISTS } from '../../constants/colors';
+import firestore from '@react-native-firebase/firestore';
+import { sha256 } from 'react-native-sha256';
+import { RegistrationDTO } from '../../types/Registration.type';
 
 export default function Registration() {
-  const {sendRegisterQRUser} = useUserCredentials();
   const initValues: RegistrationDTO = {
     firstname: '',
     middlename: '',
@@ -21,17 +21,26 @@ export default function Registration() {
     address: '',
     email: '',
     password: '',
-    isActive: 1,
+    isActive: true,
   };
 
-  const onRegister = (values: RegistrationDTO) => {
-    sendRegisterQRUser(values)
-      .then(() => {
-        ToastAndroid.show('New user was created', ToastAndroid.SHORT);
-      })
-      .catch((error: any) => {
-        Alert.alert('Something went wrong', error?.message);
+  const onRegister = async (values: RegistrationDTO) => {
+    const {firstname, middlename, lastname, mobilenumber, address, email, password, isActive} = values;
+    const sha256Password = await sha256(password);
+    try{
+      const users = await firestore().collection('Users').add({
+        email,
+        password: sha256Password,
+        isActive,
+        account: {
+          firstname, middlename, lastname, mobilenumber, address
+        }
       });
+      ToastAndroid.show('Your registration was successful!', ToastAndroid.SHORT);
+    }
+    catch(error: any) {
+      Alert.alert('Something went wrong', error?.message);
+    }
   };
 
   return (
@@ -69,18 +78,21 @@ export default function Registration() {
                   label="Middlename"
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
+                  value={values.middlename}
                   onChangeText={handleChange('middlename')}
                 />
                 <TextInputComponent
                   label="Lastname"
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
+                  value={values.lastname}
                   onChangeText={handleChange('lastname')}
                 />
                 <TextInputComponent
                   label="Contact No."
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
+                  value={values.mobilenumber}
                   onChangeText={handleChange('mobilenumber')}
                   keyboardType="phone-pad"
                 />
@@ -88,6 +100,7 @@ export default function Registration() {
                   label="Address"
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
+                  value={values.address}
                   onChangeText={handleChange('address')}
                 />
                 <TextInputComponent
@@ -95,12 +108,14 @@ export default function Registration() {
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
                   onChangeText={handleChange('email')}
+                  value={values.email}
                   keyboardType="email-address"
                 />
                 <TextInputComponent
                   label="Password"
                   borderRadius={10}
                   textMode={TextInputEnum.OUTLINED}
+                  value={values.password}
                   onChangeText={handleChange('password')}
                   secureTextEntry
                 />

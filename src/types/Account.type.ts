@@ -1,11 +1,11 @@
+import { AccountDTO, LoginDTO } from "./User.type";
+
 export type AccountTypeDTO = {
-  firstname?: string;
-  middlename?: string;
-  lastname?: string;
-  contactno?: string;
-  email?: string;
+  credentials?: LoginDTO,
+  account?: AccountDTO
 };
 
 export type AccountContextTypeDTO = AccountTypeDTO & {
-  setActiveUserInformation: (params: AccountTypeDTO) => void;
+  activeUserInformation?: AccountTypeDTO;
+  setActiveUserInformationFunction: (param: AccountTypeDTO) => void;
 };
