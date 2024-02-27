@@ -8,6 +8,8 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import { useAccountContext } from '../../providers/AccountProvider';
 import { ButtonComponent } from '../../components/Buttons';
+import storage from '@react-native-firebase/storage';
+import {utils} from '@react-native-firebase/app';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
