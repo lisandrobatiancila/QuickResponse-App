@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 
 type ProfileBadgeContainerProps = {
@@ -15,4 +15,15 @@ export const ProfileBadgeContainer = styled(View)<ProfileBadgeContainerProps>`
     background-color: ${(props: ProfileBadgeContainerProps) => props.backgroundColor ?? '#FFF'};
     width: ${(props: ProfileBadgeContainerProps) => props.width ?? '20'}%;
     border: 1px ${(props: ProfileBadgeContainerProps) => props.borderColor ?? '#FFF'};
+`;
+
+export const UploadFileContainer = styled(TouchableOpacity)`
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 1px;
+    margin-left: 200px; 
 `;

@@ -1712,6 +1712,11 @@
   resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-18.9.0.tgz"
   integrity sha512-Hma+LB5wAYt+NgGxALWxCwrTkUz7jNXHIRZLghzMK4RFmhVCaL7q2qaFvMfbu58UmRbcocGetykI4R1qQOxY9w==
 
+"@react-native-firebase/storage@^19.0.0":
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-19.0.0.tgz#ed3cce175ba0f02756ec134dbf0a229ae69523d6"
+  integrity sha512-JOjaNJfzeWQHNjpzElNjtk8JUvSdhRnCJtfQzJvgr78Y9L4dQqbTEvpcVOj4ZhwQ7V/NtldvxnQxAb6JM0lIMA==
+
 "@react-native/assets-registry@0.73.1":
   version "0.73.1"
   resolved "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.73.1.tgz"
@@ -5852,7 +5857,7 @@ react-native-dotenv@^3.4.10:
 
 react-native-image-picker@^7.1.0:
   version "7.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-7.1.0.tgz#1a41cc45ccdc177c2ebf7c7accee0ceadc36abd8"
+  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-7.1.0.tgz"
   integrity sha512-An0hn2mwqjGAA2mbsXdHRTyoMMklGPT9stIjE2zvkegU7CdoFhowqvVHfnELJNZnfAiSQuIaeY//z0r1R0lsgw==
 
 react-native-paper@^5.12.3:
