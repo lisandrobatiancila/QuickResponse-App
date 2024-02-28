@@ -12,6 +12,7 @@ export default function ImageComponent(props: ImageComponentProps) {
 
   return (
     <Image
+      // source={imageSrc}
       source={imageSrc}
       style={{width: width, height: height, borderRadius: borderRadius}}
     />

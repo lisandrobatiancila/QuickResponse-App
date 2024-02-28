@@ -13,30 +13,26 @@ import {utils} from '@react-native-firebase/app';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {Image} from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-f';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
-  const [img, setImg] = useState<any>(require('../../assets/QRApp-img1.jpeg'));
-  const fbRef = storage().ref('gs://qrapp-53a08.appspot.com/images');
+  const [img, setImg] = useState<any>('');
+  const fbRef = storage().ref('images/');
 
   const onSelectImageFromGallery = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: false,
-    });
-    console.log('RESULT ---> ');
     try {
-      if (result?.assets) {
-        const assets = result?.assets[0];
-        console.log(assets);
-
-        const pathFile = `${utils.FilePath.PICTURES_DIRECTORY}/${assets}`;
-        console.log(pathFile);
-        setImg(`${assets?.uri || result?.assets[0]?.uri}`);
-        console.log(`${pathFile}/${assets.fileName}`);
-        console.log(assets?.uri);
-        await fbRef.putFile(pathFile);
-      }
+      const docs = (await DocumentPicker.pick({
+        type: DocumentPicker.types.images,
+        allowMultiSelection: false,
+      })) as Image;
+      // console.log(docs[0].uri);
+      
+      const result = await fbRef.putFile(docs[0].uri);
+      console.log(result);
+      
     } catch (error: any) {
       console.log('ERROR ---- >');
       console.log(error);
@@ -57,16 +53,18 @@ export default function ProfileDashBoard() {
             textAlign="center"
           />
         </S.ProfileBadgeContainer>
+        <TextLabel title={JSON.stringify(img)} />
         <DivComponent
           display="flex"
           justifyContent="center"
           flexDirection="row">
-          <ImageComponent
+          <Image src={img} />
+          {/* <ImageComponent
             imageSrc={img}
             width={80}
             height={80}
             borderRadius={100}
-          />
+          /> */}
           <S.UploadFileContainer onPress={onSelectImageFromGallery}>
             <TextLabel
               title="+"
