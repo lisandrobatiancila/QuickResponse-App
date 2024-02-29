@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, ScrollView, View} from 'react-native';
+import {Alert, ScrollView, ToastAndroid, View} from 'react-native';
 import TextLabel from '../../components/TextLabel';
 import * as S from './style';
 import DividerComponent from '../../components/Divider';
@@ -12,17 +12,20 @@ import storage from '@react-native-firebase/storage';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
 import DocumentPicker from 'react-native-document-picker';
+import firestore from '@react-native-firebase/firestore';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
-  const [img, setImage] = useState<any>('');
+  const [img, setImage] = useState<any>(
+    require('../../assets/QRApp-img1.jpeg'),
+  );
   const [isRemoteFile, setIsRemoteFile] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isRemoteFile) {
       setImage(require('../../assets/QRApp-img1.jpeg'));
     }
-  }, [img]);
+  }, []);
 
   const onSelectImageFromGallery = async () => {
     try {
@@ -31,13 +34,18 @@ export default function ProfileDashBoard() {
         type: DocumentPicker.types.images,
         allowMultiSelection: false,
       })) as unknown as any;
-      
+
       await fbRef.putFile(docs[0].uri);
-      setImage(await fbRef.getDownloadURL());
-      setIsRemoteFile(true);
+
+      await firestore()
+        .collection('Users')
+        .doc('dtGbWr3YWLpqIaJ24bZi')
+        .update({'account.profile': await fbRef.getDownloadURL()});
+
+      ToastAndroid.show('Profile was uploaded', ToastAndroid.SHORT);
+      
     } catch (error: any) {
-      console.log('ERROR ---- >');
-      console.log(error);
+      Alert.alert('Something went wrong', error?.message);
     }
   };
 
