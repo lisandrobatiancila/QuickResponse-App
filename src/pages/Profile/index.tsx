@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, ScrollView, View} from 'react-native';
 import TextLabel from '../../components/TextLabel';
 import * as S from './style';
 import DividerComponent from '../../components/Divider';
@@ -9,30 +9,32 @@ import TextInputEnum from '../../enums/TextInput.enum';
 import {useAccountContext} from '../../providers/AccountProvider';
 import {ButtonComponent} from '../../components/Buttons';
 import storage from '@react-native-firebase/storage';
-import {utils} from '@react-native-firebase/app';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {Image} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import RNFS from 'react-native-f';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
-  const [img, setImg] = useState<any>('');
-  const fbRef = storage().ref('images/');
+  const [img, setImage] = useState<any>('');
+  const [isRemoteFile, setIsRemoteFile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isRemoteFile) {
+      setImage(require('../../assets/QRApp-img1.jpeg'));
+    }
+  }, [img]);
 
   const onSelectImageFromGallery = async () => {
     try {
+      const fbRef = storage().ref(`images-${Date.now().toString()}/`);
       const docs = (await DocumentPicker.pick({
         type: DocumentPicker.types.images,
         allowMultiSelection: false,
-      })) as Image;
-      // console.log(docs[0].uri);
+      })) as unknown as any;
       
-      const result = await fbRef.putFile(docs[0].uri);
-      console.log(result);
-      
+      await fbRef.putFile(docs[0].uri);
+      setImage(await fbRef.getDownloadURL());
+      setIsRemoteFile(true);
     } catch (error: any) {
       console.log('ERROR ---- >');
       console.log(error);
@@ -53,18 +55,17 @@ export default function ProfileDashBoard() {
             textAlign="center"
           />
         </S.ProfileBadgeContainer>
-        <TextLabel title={JSON.stringify(img)} />
         <DivComponent
           display="flex"
           justifyContent="center"
           flexDirection="row">
-          <Image src={img} />
-          {/* <ImageComponent
+          <ImageComponent
             imageSrc={img}
+            isRemoteFile={isRemoteFile}
             width={80}
             height={80}
             borderRadius={100}
-          /> */}
+          />
           <S.UploadFileContainer onPress={onSelectImageFromGallery}>
             <TextLabel
               title="+"
