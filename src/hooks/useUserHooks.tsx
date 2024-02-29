@@ -2,7 +2,8 @@ import {
   loginUser,
   registrationUser,
 } from '../service/registration/User.service';
-import {LoginDTO, RegistrationDTO} from '../types/User.type';
+import { RegistrationDTO } from '../types/Registration.type';
+import {AccountDTO, LoginDTO, UserDTO} from '../types/User.type';
 
 export const useUserCredentials = () => {
   const sendRegisterQRUser = async (registrationDTO: RegistrationDTO) => {
@@ -11,7 +12,7 @@ export const useUserCredentials = () => {
     return record;
   };
 
-  const sendLoginQRUser = async (loginDTO: LoginDTO) => {
+  const sendLoginQRUser = async (loginDTO: LoginDTO): Promise<UserDTO> => {
     const record = await loginUser(loginDTO);
 
     return record;

@@ -11,9 +11,11 @@ import { COLOR_LISTS } from '../../constants/colors';
 import firestore from '@react-native-firebase/firestore';
 import { sha256 } from 'react-native-sha256';
 import { RegistrationDTO } from '../../types/Registration.type';
+import { useUserCredentials } from '../../hooks/useUserHooks';
 
 export default function Registration() {
   const initValues: RegistrationDTO = {
+    profile: '',
     firstname: '',
     middlename: '',
     lastname: '',
@@ -23,19 +25,13 @@ export default function Registration() {
     password: '',
     isActive: true,
   };
+  const {sendRegisterQRUser} = useUserCredentials();
 
-  const onRegister = async (values: RegistrationDTO) => {
-    const {firstname, middlename, lastname, mobilenumber, address, email, password, isActive} = values;
-    const sha256Password = await sha256(password);
+  const onRegister = async (values: RegistrationDTO) => {    
     try{
-      const users = await firestore().collection('Users').add({
-        email,
-        password: sha256Password,
-        isActive,
-        account: {
-          firstname, middlename, lastname, mobilenumber, address
-        }
-      });
+      const registrationResponse = await sendRegisterQRUser(values);
+      console.log(registrationResponse);
+      
       ToastAndroid.show('Your registration was successful!', ToastAndroid.SHORT);
     }
     catch(error: any) {

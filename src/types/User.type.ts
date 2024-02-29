@@ -4,6 +4,7 @@ export type LoginDTO = {
 }
 
 export type AccountDTO = {
+    profile: string;
     firstname: string;
     middlename: string;
     lastname: string;

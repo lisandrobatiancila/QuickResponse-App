@@ -7,22 +7,21 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
-import {LoginDTO, UserDTO} from '../../types/User.type';
+import {AccountDTO, LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
-import firestore, { Filter } from '@react-native-firebase/firestore';
 import { useAccountContext } from '../../providers/AccountProvider';
-import { sha256 } from 'react-native-sha256';
+import { useUserCredentials } from '../../hooks/useUserHooks';
 
 export default function Login(props: any) {
   const initValues: LoginDTO = {
     loginEmail: '',
     loginPassword: '',
   };
-  const {setActiveUserInformationFunction} = useAccountContext();
-
   const {navigation} = props;
+  const {setActiveUserInformationFunction} = useAccountContext();
+  const {sendLoginQRUser} = useUserCredentials();
 
   const onSignup = () => {
     navigation.navigate('Register');
@@ -30,35 +29,28 @@ export default function Login(props: any) {
 
   const onLoginUser = async (values: LoginDTO) => {
     try {
-      const {loginEmail, loginPassword} = values;
-      const results = await firestore().collection('Users').where('email', '==', loginEmail).get();
-    
-      if (results.docs.length === 0) {
-        Alert.alert('Message', 'Invalid credentials');
-        return;
-      }
-      const activeUser: UserDTO = results.docs[0].data() as UserDTO;
-      const {email, password, isActive, account} = activeUser;
+      const loginResponse = await sendLoginQRUser(values);
       
-      const loginPassSha256 = await sha256(loginPassword);
-      
-      if (loginPassSha256 !== password) {
-        Alert.alert('Message', 'Invalid credentials');
-        return;
-      }
-
-      const {firstname, middlename, lastname, mobilenumber, address} = account;
-      setActiveUserInformationFunction({
-        account: {
-          firstname, middlename, lastname, mobilenumber, address
-        },
-        credentials: {
-          loginEmail: email,
-          loginPassword: password,
+      if (Object.keys(loginResponse).length) {
+        const {email, password, account, isActive}: UserDTO = loginResponse;
+        const {firstname, middlename, lastname, mobilenumber, address} = account;
+        if (!isActive) {
+          Alert.alert('Oops', 'Your account is inactive.');
+          return;
         }
-      });
-      
-      navigation.navigate('Dashboard');
+        setActiveUserInformationFunction({
+          account: {
+            firstname, middlename, lastname, mobilenumber, address
+          },
+          credentials: {
+            loginEmail: email,
+            loginPassword: password,
+          }
+        });
+        navigation.navigate('Dashboard');
+      } else {
+        Alert.alert('Something went wrong', 'Invalid credentials');
+      }
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
     }
