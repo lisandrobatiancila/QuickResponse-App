@@ -2,8 +2,8 @@ import {
   loginUser,
   registrationUser,
 } from '../service/registration/User.service';
-import { RegistrationDTO } from '../types/Registration.type';
-import {AccountDTO, LoginDTO, UserDTO} from '../types/User.type';
+import {RegistrationDTO} from '../types/Registration.type';
+import {LoginDTO, UserDTO} from '../types/User.type';
 
 export const useUserCredentials = () => {
   const sendRegisterQRUser = async (registrationDTO: RegistrationDTO) => {

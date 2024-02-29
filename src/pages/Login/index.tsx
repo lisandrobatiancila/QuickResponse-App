@@ -1,4 +1,4 @@
-import React, {View, ScrollView, Alert, ToastAndroid} from 'react-native';
+import React, {View, ScrollView, Alert} from 'react-native';
 import TextComponent from '../../components/TextLabel';
 import ImageComponent from '../../components/ImageContainer';
 import {APP_HEIGHT, APP_WIDTH} from '../../constants/dimensions';
@@ -7,12 +7,12 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
-import {AccountDTO, LoginDTO, UserDTO} from '../../types/User.type';
+import {LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
-import { useAccountContext } from '../../providers/AccountProvider';
-import { useUserCredentials } from '../../hooks/useUserHooks';
+import {useAccountContext} from '../../providers/AccountProvider';
+import {useUserCredentials} from '../../hooks/useUserHooks';
 
 export default function Login(props: any) {
   const initValues: LoginDTO = {
@@ -30,22 +30,36 @@ export default function Login(props: any) {
   const onLoginUser = async (values: LoginDTO) => {
     try {
       const loginResponse = await sendLoginQRUser(values);
-      
+
       if (Object.keys(loginResponse).length) {
         const {email, password, account, isActive}: UserDTO = loginResponse;
-        const {firstname, middlename, lastname, mobilenumber, address} = account;
+        const {
+          fbID,
+          profile,
+          firstname,
+          middlename,
+          lastname,
+          mobilenumber,
+          address,
+        } = account;
         if (!isActive) {
           Alert.alert('Oops', 'Your account is inactive.');
           return;
         }
         setActiveUserInformationFunction({
           account: {
-            firstname, middlename, lastname, mobilenumber, address
+            fbID,
+            profile,
+            firstname,
+            middlename,
+            lastname,
+            mobilenumber,
+            address,
           },
           credentials: {
             loginEmail: email,
             loginPassword: password,
-          }
+          },
         });
         navigation.navigate('Dashboard');
       } else {
@@ -76,7 +90,7 @@ export default function Login(props: any) {
           />
           <Formik
             initialValues={initValues}
-            onSubmit={(values) => {
+            onSubmit={values => {
               onLoginUser(values);
             }}>
             {({handleSubmit, handleChange, values}) => (

@@ -4,6 +4,7 @@ export type LoginDTO = {
 }
 
 export type AccountDTO = {
+    fbID?: string;
     profile: string;
     firstname: string;
     middlename: string;
