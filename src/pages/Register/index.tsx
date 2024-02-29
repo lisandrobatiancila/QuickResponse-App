@@ -29,9 +29,7 @@ export default function Registration() {
 
   const onRegister = async (values: RegistrationDTO) => {    
     try{
-      const registrationResponse = await sendRegisterQRUser(values);
-      console.log(registrationResponse);
-      
+      const registrationResponse = await sendRegisterQRUser(values);      
       ToastAndroid.show('Your registration was successful!', ToastAndroid.SHORT);
     }
     catch(error: any) {
