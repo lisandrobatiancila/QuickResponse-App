@@ -8,6 +8,7 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import { useAccountContext } from '../../providers/AccountProvider';
 import { ButtonComponent } from '../../components/Buttons';
+import DivComponent from '../../components/DivContainer';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
@@ -38,10 +39,38 @@ export default function ProfileDashBoard() {
         </S.ProfileBadgeContainer>
         <DividerComponent margin="10px 0 0 0" />
         <S.ProfileBadgeContainer borderColor={COLOR_LISTS.RED_400} width="90">
-          <TextLabel title="Allergies" fontSize={15} />
-          <TextLabel title="Conditions" fontSize={15} />
-          <TextLabel title="Blood Type" fontSize={15} />
-          <TextLabel title="Do you have Medical Aid?" fontSize={15} />
+          <DivComponent flexDirection="row" justifyContent='space-between'>
+            <TextLabel title="Allergies" fontSize={15} />
+            <DivComponent display="flex" flexDirection="row" justifyContent='flex-end' width='60'>
+              <ButtonComponent title="View" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+              <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
+              <ButtonComponent title="Add" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+            </DivComponent>
+          </DivComponent>
+          <DivComponent flexDirection="row" justifyContent='space-between'>
+            <TextLabel title="Conditions" fontSize={15} />
+            <DivComponent display="flex" flexDirection="row" justifyContent="flex-end" width='60'>
+              <ButtonComponent title="View" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+              <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
+              <ButtonComponent title="Add" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+            </DivComponent>
+          </DivComponent>
+          <DivComponent flexDirection="row" justifyContent='space-between' width='100'>
+            <TextLabel title="Blood Type" fontSize={15} />
+            <DivComponent display="flex" flexDirection="row" justifyContent="flex-end" width='60'>
+              <ButtonComponent title="View" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+              <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
+              <ButtonComponent title="Add"fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+            </DivComponent>
+          </DivComponent>
+          <DivComponent flexDirection="row" justifyContent='space-between' width='60'>
+            <TextLabel title="Do you have Medical Aid?" fontSize={15} />
+            <DivComponent display="flex" flexDirection="row" justifyContent="flex-end" width='60'>
+              <ButtonComponent title="View" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+              <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
+              <ButtonComponent title="Add" fontSize={15} width={23} textColor={COLOR_LISTS.RED_400} />
+            </DivComponent>
+          </DivComponent>
         </S.ProfileBadgeContainer>
         <DividerComponent margin="10px 0 0 0" />
         <S.ProfileBadgeContainer backgroundColor={COLOR_LISTS.RED_400} width="50">
