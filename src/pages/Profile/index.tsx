@@ -9,10 +9,10 @@ import TextInputEnum from '../../enums/TextInput.enum';
 import {useAccountContext} from '../../providers/AccountProvider';
 import {ButtonComponent} from '../../components/Buttons';
 import storage from '@react-native-firebase/storage';
-import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
 import DocumentPicker from 'react-native-document-picker';
 import firestore from '@react-native-firebase/firestore';
+import ImageComponent from '../../components/ImageContainer';
 
 export default function ProfileDashBoard() {
   const {activeUserInformation} = useAccountContext();
@@ -43,7 +43,6 @@ export default function ProfileDashBoard() {
         .update({'account.profile': await fbRef.getDownloadURL()});
 
       ToastAndroid.show('Profile was uploaded', ToastAndroid.SHORT);
-      
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
     }
