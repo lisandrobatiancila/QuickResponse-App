@@ -7,11 +7,9 @@ import TextInputEnum from '../../enums/TextInput.enum';
 import ImageComponent from '../../components/ImageContainer';
 import DivComponent from '../../components/DivContainer';
 import {Formik} from 'formik';
-import { COLOR_LISTS } from '../../constants/colors';
-import firestore from '@react-native-firebase/firestore';
-import { sha256 } from 'react-native-sha256';
-import { RegistrationDTO } from '../../types/Registration.type';
-import { useUserCredentials } from '../../hooks/useUserHooks';
+import {COLOR_LISTS} from '../../constants/colors';
+import {RegistrationDTO} from '../../types/Registration.type';
+import {useUserCredentials} from '../../hooks/useUserHooks';
 
 export default function Registration() {
   const initValues: RegistrationDTO = {
@@ -27,12 +25,14 @@ export default function Registration() {
   };
   const {sendRegisterQRUser} = useUserCredentials();
 
-  const onRegister = async (values: RegistrationDTO) => {    
-    try{
-      const registrationResponse = await sendRegisterQRUser(values);      
-      ToastAndroid.show('Your registration was successful!', ToastAndroid.SHORT);
-    }
-    catch(error: any) {
+  const onRegister = async (values: RegistrationDTO) => {
+    try {
+      await sendRegisterQRUser(values);
+      ToastAndroid.show(
+        'Your registration was successful!',
+        ToastAndroid.SHORT,
+      );
+    } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
     }
   };

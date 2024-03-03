@@ -8,6 +8,7 @@ type TextInputComponentProps = {
   borderRadius?: number;
   textMode: TextInputEnum;
   value?: string;
+  height?: string;
   onChangeText?: (param: string | ChangeEvent<Element>) => void;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
@@ -18,6 +19,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
     borderRadius,
     textMode,
     value,
+    height,
     onChangeText,
     secureTextEntry,
     keyboardType,
@@ -32,6 +34,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
       onChangeText={onChangeText}
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType ?? 'default'}
+      height={height}
     />
   );
 }
