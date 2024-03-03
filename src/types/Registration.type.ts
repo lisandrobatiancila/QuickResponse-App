@@ -1,4 +1,5 @@
 export type RegistrationDTO = {
+    profile: string;
     firstname:    string
     middlename:   string
     lastname:     string
