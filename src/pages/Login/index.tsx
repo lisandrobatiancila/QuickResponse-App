@@ -1,4 +1,4 @@
-import React, {View, ScrollView, Alert, ToastAndroid} from 'react-native';
+import React, {View, ScrollView, Alert} from 'react-native';
 import TextComponent from '../../components/TextLabel';
 import ImageComponent from '../../components/ImageContainer';
 import {APP_HEIGHT, APP_WIDTH} from '../../constants/dimensions';
@@ -7,21 +7,21 @@ import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
 import DivComponent from '../../components/DivContainer';
 import TextLabel from '../../components/TextLabel';
-import {LoginDTO} from '../../types/User.type';
-import {useUserCredentials} from '../../hooks/useUserHooks';
+import {LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
 import {Formik} from 'formik';
+import {useAccountContext} from '../../providers/AccountProvider';
+import {useUserCredentials} from '../../hooks/useUserHooks';
 
 export default function Login(props: any) {
-  const {sendLoginQRUser} = useUserCredentials();
-
   const initValues: LoginDTO = {
-    email: '',
-    password: '',
+    loginEmail: '',
+    loginPassword: '',
   };
-
   const {navigation} = props;
+  const {setActiveUserInformationFunction} = useAccountContext();
+  const {sendLoginQRUser} = useUserCredentials();
 
   const onSignup = () => {
     navigation.navigate('Register');
@@ -29,12 +29,42 @@ export default function Login(props: any) {
 
   const onLoginUser = async (values: LoginDTO) => {
     try {
-      const result = await sendLoginQRUser(values);
-      if (!result) {
-        ToastAndroid.show('Invalid credentials', ToastAndroid.SHORT);
-        return;
+      const loginResponse = await sendLoginQRUser(values);
+
+      if (Object.keys(loginResponse).length) {
+        const {email, password, account, isActive}: UserDTO = loginResponse;
+        const {
+          fbID,
+          profile,
+          firstname,
+          middlename,
+          lastname,
+          mobilenumber,
+          address,
+        } = account;
+        if (!isActive) {
+          Alert.alert('Oops', 'Your account is inactive.');
+          return;
+        }
+        setActiveUserInformationFunction({
+          account: {
+            fbID,
+            profile,
+            firstname,
+            middlename,
+            lastname,
+            mobilenumber,
+            address,
+          },
+          credentials: {
+            loginEmail: email,
+            loginPassword: password,
+          },
+        });
+        navigation.navigate('Dashboard');
+      } else {
+        Alert.alert('Something went wrong', 'Invalid credentials');
       }
-      navigation.navigate('Dashboard');
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
     }
@@ -60,7 +90,9 @@ export default function Login(props: any) {
           />
           <Formik
             initialValues={initValues}
-            onSubmit={values => onLoginUser(values)}>
+            onSubmit={values => {
+              onLoginUser(values);
+            }}>
             {({handleSubmit, handleChange, values}) => (
               <>
                 <DivComponent padding="10">
@@ -69,17 +101,17 @@ export default function Login(props: any) {
                     label="Email"
                     borderRadius={10}
                     textMode={TextInputEnum.OUTLINED}
-                    value={values.email}
+                    value={values.loginEmail}
                     keyboardType={'email-address'}
-                    onChangeText={handleChange('email')}
+                    onChangeText={handleChange('loginEmail')}
                   />
                   <TextInputComponent
                     label="Password"
                     borderRadius={10}
                     textMode={TextInputEnum.OUTLINED}
-                    value={values.password}
+                    value={values.loginPassword}
                     secureTextEntry
-                    onChangeText={handleChange('password')}
+                    onChangeText={handleChange('loginPassword')}
                   />
                   <ButtonComponent
                     alignSelf="center"

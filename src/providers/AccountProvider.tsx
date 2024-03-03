@@ -6,36 +6,32 @@ type AccountProviderProps = {
   children: React.ReactNode;
 };
 
-const [useAccountContext, AccountContextProvider] = createAppContext<AccountContextTypeDTO>();
+const [useAccountContext, AccountContextProvider] =
+  createAppContext<AccountContextTypeDTO>();
 
-function AccountProvider (props: AccountProviderProps){
-  const [firstname, setFirstname] = useState<string>('');
-  const [middlename, setMiddlename] = useState<string>('');
-  const [lastname, setLastname] = useState<string>('');
-  const [contactno, setContactno] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+function AccountProvider(props: AccountProviderProps) {
+  const [activeUserInformation, setActiveUserInformation] = useState<
+    AccountTypeDTO | undefined
+  >(undefined);
 
-  const setActiveUserInformation = (params: AccountTypeDTO) => {
-    const {firstname, middlename, lastname, contactno, email } = params;
+  const setActiveUserInformationFunction = (
+    activeUserInformation: AccountTypeDTO,
+  ) => {
+    setActiveUserInformation(activeUserInformation);
+  };
 
-    setFirstname(firstname ?? '');
-    setMiddlename(middlename ?? '');
-    setLastname(lastname ?? '');
-    setContactno(contactno ?? '');
-    setEmail(email ?? '');
-  }
   const getValues = (): AccountContextTypeDTO => {
     return {
-      firstname,
-      middlename,
-      lastname,
-      contactno,
-      email,
-      setActiveUserInformation
+      activeUserInformation,
+      setActiveUserInformationFunction,
     };
   };
 
-  return <AccountContextProvider value={getValues()}>{props.children}</AccountContextProvider>;
-};
+  return (
+    <AccountContextProvider value={getValues()}>
+      {props.children}
+    </AccountContextProvider>
+  );
+}
 
 export {AccountProvider, useAccountContext};

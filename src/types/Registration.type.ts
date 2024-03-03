@@ -1,4 +1,5 @@
 export type RegistrationDTO = {
+    profile: string;
     firstname:    string
     middlename:   string
     lastname:     string
@@ -6,5 +7,5 @@ export type RegistrationDTO = {
     address:      string
     email:        string
     password:     string
-    isActive:     number
+    isActive:     boolean
 }

@@ -11,17 +11,6 @@ import firestore from '@react-native-firebase/firestore';
 export default function Home(props: any) {
   const {navigation} = props;
 
-  useEffect(() => {
-    recs();
-  }, []);
-
-  async function recs() {
-    const userColl = await firestore().collection('Students').get()
-    console.log("RES");
-    const data = userColl.docs[0].data();
-    console.log(data);
-    
-  }
   function onGetStarted() {
     navigation.navigate('Login');
   }
