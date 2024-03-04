@@ -43,7 +43,7 @@ function App() {
             }}
           />
         </StackNavigator.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
     </AccountProvider>
   );
 }

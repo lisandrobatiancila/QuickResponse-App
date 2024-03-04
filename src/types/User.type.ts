@@ -19,3 +19,11 @@ export type UserDTO = {
   isActive: boolean;
   account: AccountDTO;
 };
+
+export type ProfileDTO = {
+  firstname: string;
+  middlename: string;
+  lastname: string;
+  email: string;
+  mobilenumber: string;
+}
