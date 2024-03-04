@@ -1,4 +1,5 @@
 import {TouchableOpacity, View} from 'react-native';
+import { Modal } from 'react-native-paper';
 import styled from 'styled-components';
 
 type ProfileBadgeContainerProps = {
@@ -28,4 +29,9 @@ export const UploadFileContainer = styled(TouchableOpacity)`
   bottom: 0;
   left: 1px;
   margin-left: 200px;
+`;
+
+export const ProfileModalComponent = styled(Modal)`
+    position: absolute;
+    bottom: 0;
 `;
