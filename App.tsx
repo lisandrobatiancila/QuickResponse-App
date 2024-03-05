@@ -7,6 +7,7 @@ import Registration from './src/pages/Register';
 import DashBoard from './src/pages/Dashboard';
 import {COLOR_LISTS} from './src/constants/colors';
 import {AccountProvider} from './src/providers/AccountProvider';
+import EditPersonalInformationComponent from './src/pages/Profile/EditPersonalInformation';
 
 const StackNavigator = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ function App() {
               headerShown: false,
             }}
           />
+          <StackNavigator.Screen name='Edit Profile' component={EditPersonalInformationComponent} />
         </StackNavigator.Navigator>
       </NavigationContainer>
     </AccountProvider>

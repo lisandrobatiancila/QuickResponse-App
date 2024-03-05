@@ -20,10 +20,11 @@ export type UserDTO = {
   account: AccountDTO;
 };
 
-export type ProfileDTO = {
+export type UpdateProfileDTO = {
   firstname: string;
   middlename: string;
   lastname: string;
   email: string;
   mobilenumber: string;
+  password: string;
 }

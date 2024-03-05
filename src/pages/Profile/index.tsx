@@ -17,8 +17,10 @@ import {Formik} from 'formik';
 import {Modal, PaperProvider, Portal, Switch} from 'react-native-paper';
 import AddNewAllergies from './AddAllergies';
 import {QRModalComponent} from '../../components/Modal';
+import { APP_HEIGHT, APP_WIDTH } from '../../constants/dimensions';
+import { formatPasswordDisplay } from '../../utils/format-display';
 
-export default function ProfileDashBoard() {
+export default function ProfileDashBoard(props: any) {
   const {activeUserInformation} = useAccountContext();
   const [img, setImage] = useState<any>(
     require('../../assets/QRApp-img1.jpeg'),
@@ -62,6 +64,10 @@ export default function ProfileDashBoard() {
     }
   };
 
+  const onEditPersonalInformation = () => {
+    props.navigation.navigate('Edit Profile')
+  }
+
   const onToggledMedicalAid = () => {
     setSwitchMedicalAid(!switchMedicalAid);
   };
@@ -79,18 +85,17 @@ export default function ProfileDashBoard() {
     setToggledModal(true);
   };
 
+  const closeModal = () => {
+    setToggledModal(false);
+  }
+
   return (
     <PaperProvider>
       <ScrollView>
-        <QRModalComponent visibility />
+        <QRModalComponent visibility={toggledModal} width={100} height={100} contentWidth={APP_WIDTH / 2} contentHeight={APP_HEIGHT / 2} contentPadding={10} backgroundColor={COLOR_LISTS.GREY_300} closeModal={closeModal}>
+          <AddNewAllergies />
+        </QRModalComponent>
         <View>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={values => {
-              updateProfileBasicInformation(values);
-            }}>
-            {({handleChange, handleSubmit}) => (
-              <>
                 <DividerComponent margin="10px 0 0 0" />
                 <S.ProfileBadgeContainer
                   backgroundColor={COLOR_LISTS.RED_400}
@@ -127,34 +132,51 @@ export default function ProfileDashBoard() {
                   borderColor={COLOR_LISTS.RED_500}
                   width="90">
                   <TextLabel title="Firstname" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
                   <TextInputComponent
                     value={activeUserInformation?.account?.firstname}
                     textMode={TextInputEnum.OUTLINED}
-                    onChangeText={handleChange('firstname')}
+                    disabled
                   />
-                  <TextLabel title="Middlename" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
+                    <TextLabel title="Middlename" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
                   <TextInputComponent
                     value={activeUserInformation?.account?.middlename}
                     textMode={TextInputEnum.OUTLINED}
-                    onChangeText={handleChange('middlename')}
+                    disabled
                   />
-                  <TextLabel title="Lastname" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
+                    <TextLabel title="Lastname" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
                   <TextInputComponent
                     value={activeUserInformation?.account?.lastname}
                     textMode={TextInputEnum.OUTLINED}
-                    onChangeText={handleChange('lastname')}
+                    disabled
                   />
-                  <TextLabel title="Email" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
+                    <TextLabel title="Email" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
                   <TextInputComponent
                     value={activeUserInformation?.credentials?.loginEmail}
                     textMode={TextInputEnum.OUTLINED}
-                    onChangeText={handleChange('email')}
+                    disabled
                   />
-                  <TextLabel title="Cellphone Number" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
+                    <TextLabel title="Password" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
+                  <TextInputComponent
+                    value={formatPasswordDisplay(activeUserInformation?.credentials?.loginPassword)}
+                    textMode={TextInputEnum.OUTLINED}
+                    disabled
+                  />
+                  <DividerComponent margin="3px 0 0 0"/>
+                    <TextLabel title="Cellphone Number" fontSize={15} />
+                  <DividerComponent margin="3px 0 0 0"/>
                   <TextInputComponent
                     value={activeUserInformation?.account?.mobilenumber}
                     textMode={TextInputEnum.OUTLINED}
-                    onChangeText={handleChange('mobilenumber')}
+                    disabled
                   />
                 </S.ProfileBadgeContainer>
                 <DividerComponent margin="10px 0 0 0" />
@@ -184,7 +206,7 @@ export default function ProfileDashBoard() {
                       <ButtonComponent
                         title="View"
                         fontSize={15}
-                        width={23}
+                        width={20}
                         textColor={COLOR_LISTS.RED_400}
                       />
                       <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
@@ -209,7 +231,7 @@ export default function ProfileDashBoard() {
                       <ButtonComponent
                         title="View"
                         fontSize={15}
-                        width={23}
+                        width={20}
                         textColor={COLOR_LISTS.RED_400}
                       />
                       <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
@@ -234,7 +256,7 @@ export default function ProfileDashBoard() {
                       <ButtonComponent
                         title="View"
                         fontSize={15}
-                        width={23}
+                        width={20}
                         textColor={COLOR_LISTS.RED_400}
                       />
                       <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
@@ -282,17 +304,14 @@ export default function ProfileDashBoard() {
                   alignSelf="center"
                   backgroundColor={COLOR_LISTS.RED_400}
                   borderRadius="10"
-                  title="Save"
+                  title="Edit Personal Information"
                   textAlign="center"
                   padding="10"
                   fontSize={18}
                   textColor={COLOR_LISTS.WHITE}
                   width={80}
-                  onPress={handleSubmit}
+                  onPress={onEditPersonalInformation}
                 />
-              </>
-            )}
-          </Formik>
         </View>
         <DividerComponent margin="10px 0 0 0" />
       </ScrollView>

@@ -4,7 +4,7 @@ import {
   updateUserInformation,
 } from '../service/registration/User.service';
 import {RegistrationDTO} from '../types/Registration.type';
-import {LoginDTO, ProfileDTO, UserDTO} from '../types/User.type';
+import {LoginDTO, UpdateProfileDTO, UserDTO} from '../types/User.type';
 
 export const useUserCredentials = () => {
   const sendRegisterQRUser = async (registrationDTO: RegistrationDTO) => {
@@ -20,10 +20,11 @@ export const useUserCredentials = () => {
   };
 
   const sendUpdateInfromationOfQRUser = async (
-    profileInformation: ProfileDTO,
+    activeUserID: string,
+    profileInformation: UpdateProfileDTO,
   ) => {
-    const record = await updateUserInformation(profileInformation);
-
+    const record = await updateUserInformation(activeUserID, profileInformation);
+    
     return record;
   };
 

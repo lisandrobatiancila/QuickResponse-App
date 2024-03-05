@@ -19,10 +19,10 @@ export default function AddNewAllergies() {
       }}>
       <TextLabel title="Add new allergies" textAlign="center" fontSize={20} />
       <DividerComponent margin="10px 0 0 0" />
-      <TextInputComponent textMode={TextInputEnum.OUTLINED} />
+      <TextInputComponent textMode={TextInputEnum.OUTLINED} label="Allergies" />
       <DividerComponent margin="10px 0 0 0" />
       <ButtonComponent
-        title="Save new allergies"
+        title="Save"
         backgroundColor={COLOR_LISTS.RED_400}
         padding={'10'}
         borderRadius={'10'}

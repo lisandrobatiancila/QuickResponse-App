@@ -12,6 +12,7 @@ type TextInputComponentProps = {
   onChangeText?: (param: string | ChangeEvent<Element>) => void;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  disabled?: boolean;
 };
 export default function TextInputComponent(props: TextInputComponentProps) {
   const {
@@ -23,6 +24,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
     onChangeText,
     secureTextEntry,
     keyboardType,
+    disabled
   } = props;
 
   return (
@@ -35,6 +37,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType ?? 'default'}
       height={height}
+      disabled={disabled}
     />
   );
 }

@@ -30,3 +30,11 @@ export const DASHBOARD = {
     tabBarIcon: <FontAwesome6 name='user-gear' size={25} color={COLOR_LISTS.BLUE_400} />,
   },
 };
+
+export enum TextAlignmentEnum {
+  CENTER = 'center',
+  LEFT = 'left',
+  RIGHT = 'right',
+  AUTO = 'auto',
+  JUSTIFY = 'justify'
+}
