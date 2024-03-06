@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import TextLabel from '../../../../components/TextLabel';
 import {COLOR_LISTS} from '../../../../constants/colors';
-import {APP_HEIGHT} from '../../../../constants/dimensions';
+import {APP_HEIGHT, APP_WIDTH} from '../../../../constants/dimensions';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {AllergyDTO} from '../../../../types/User.type';
@@ -27,8 +27,8 @@ export default function ViewAllergies() {
   const listOfAllergies = useMemo(() => {
     return allergyRecords.map((record: any, i: number) => {
       return (
-        <>
-        <DividerComponent margin="3px 0 0 0" />
+        <View key={i}>
+          <DividerComponent margin="3px 0 0 0" />
           <ButtonComponent
             title={record}
             key={i}
@@ -39,8 +39,9 @@ export default function ViewAllergies() {
             padding="5"
             borderRadius="5"
             textColor={COLOR_LISTS.WHITE}
+            width={80}
           />
-        </>
+        </View>
       );
     });
   }, [allergyRecords]);
@@ -50,12 +51,13 @@ export default function ViewAllergies() {
       <View
         style={{
           backgroundColor: COLOR_LISTS.WHITE,
+          width: APP_WIDTH,
           height: APP_HEIGHT / 2,
           padding: 10,
         }}>
         <TextLabel
           title="List of all allergies"
-          fontSize={18}
+          fontSize={20}
           textAlign="center"
         />
         {listOfAllergies}

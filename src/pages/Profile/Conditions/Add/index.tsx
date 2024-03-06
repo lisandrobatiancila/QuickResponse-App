@@ -10,46 +10,46 @@ import {APP_HEIGHT, APP_WIDTH} from '../../../../constants/dimensions';
 import {Formik} from 'formik';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
-import {AllergyDTO} from '../../../../types/User.type';
+import {MedicalConditionDTO} from '../../../../types/User.type';
 
-export default function AddNewAllergies() {
-  const initValues: AllergyDTO = {
-    allergy: '',
+export default function AddNewCondition() {
+  const initValues: MedicalConditionDTO = {
+    condition: '',
   };
-  const {sendAddNewAllergies} = useUserProfile();
+  const {sendAddNewCondition} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
 
-  const onSaveAllergy = async (values: AllergyDTO) => {
-    await sendAddNewAllergies(
+  const onSaveCondtion = async (values: MedicalConditionDTO) => {
+    await sendAddNewCondition(
       activeUserInformation?.account?.fbID ?? '',
       values,
     );
-    ToastAndroid.show('New allergies was added.', ToastAndroid.SHORT);
+    ToastAndroid.show('New medical condition was added.', ToastAndroid.SHORT);
   };
 
   return (
     <View
       style={{
         backgroundColor: COLOR_LISTS.WHITE,
+        width: APP_WIDTH,
         height: APP_HEIGHT / 2,
         padding: 10,
-        width: APP_WIDTH,
       }}>
-      <TextLabel title="Add new allergies" textAlign="center" fontSize={20} />
+      <TextLabel title="Add new conditions" textAlign="center" fontSize={20} />
       <DividerComponent margin="10px 0 0 0" />
       <Formik
         initialValues={initValues}
-        onSubmit={(values: AllergyDTO, {resetForm}) => {
-          onSaveAllergy(values);
+        onSubmit={(values: MedicalConditionDTO, {resetForm}) => {
+          onSaveCondtion(values);
           resetForm();
         }}>
         {({handleSubmit, handleChange, values}) => (
           <>
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
-              label="Allergies"
-              value={values.allergy}
-              onChangeText={handleChange('allergy')}
+              label="Conditions"
+              value={values.condition}
+              onChangeText={handleChange('condtion')}
             />
             <DividerComponent margin="10px 0 0 0" />
             <ButtonComponent

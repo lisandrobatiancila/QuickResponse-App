@@ -19,6 +19,7 @@ import {APP_HEIGHT, APP_WIDTH} from '../../constants/dimensions';
 import {formatPasswordDisplay} from '../../utils/format-display';
 import AddNewAllergies from './Allergies/Add';
 import ViewAllergies from './Allergies/View';
+import AddNewCondition from './Conditions/Add';
 
 export default function ProfileDashBoard(props: any) {
   const {activeUserInformation} = useAccountContext();
@@ -70,6 +71,11 @@ export default function ProfileDashBoard(props: any) {
     setActiveModalView('add-allergies');
     setToggledModal(true);
   };
+  
+  const onPressAddNewCondition = () => {
+    setActiveModalView('add-condition');
+    setToggledModal(true);
+  };
 
   const onPressViewAllergies = () => {
     setActiveModalView('view-allergies');
@@ -85,15 +91,16 @@ export default function ProfileDashBoard(props: any) {
       <ScrollView>
         <QRModalComponent
           visibility={toggledModal}
-          width={100}
+          width={APP_WIDTH}
           height={100}
-          contentWidth={APP_WIDTH / 2}
+          contentWidth={100}
           contentHeight={APP_HEIGHT / 2}
           contentPadding={10}
           backgroundColor={COLOR_LISTS.GREY_300}
           closeModal={closeModal}>
           {activeModalView === 'add-allergies' && <AddNewAllergies />}
           {activeModalView === 'view-allergies' && <ViewAllergies />}
+          {activeModalView === 'add-condition' && <AddNewCondition />}
         </QRModalComponent>
         <View>
           <DividerComponent margin="10px 0 0 0" />
@@ -235,6 +242,7 @@ export default function ProfileDashBoard(props: any) {
                   fontSize={15}
                   width={23}
                   textColor={COLOR_LISTS.RED_400}
+                  onPress={onPressAddNewCondition}
                 />
               </DivComponent>
             </DivComponent>
@@ -295,7 +303,7 @@ export default function ProfileDashBoard(props: any) {
           <DividerComponent margin="10px 0 0 0" />
           <ButtonComponent
             alignSelf="center"
-            backgroundColor={COLOR_LISTS.RED_400}
+            backgroundColor={COLOR_LISTS.BLUE_400}
             borderRadius="10"
             title="Edit Personal Information"
             textAlign="center"

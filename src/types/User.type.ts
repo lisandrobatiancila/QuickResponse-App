@@ -32,3 +32,7 @@ export type UpdateProfileDTO = {
 export type AllergyDTO = {
   allergy: string;
 };
+
+export type MedicalConditionDTO = {
+  condition: string;
+};
