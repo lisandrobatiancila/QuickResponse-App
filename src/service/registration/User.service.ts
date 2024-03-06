@@ -63,7 +63,8 @@ export const updateUserInformation = async (
   activeUserID: string,
   profileInformation: UpdateProfileDTO,
 ) => {
-  const {firstname, middlename, lastname, mobilenumber, password} = profileInformation;
+  const {firstname, middlename, lastname, mobilenumber, password} =
+    profileInformation;
   let hashPassword = await sha256(password);
 
   firestore().collection('Users').doc(activeUserID).update({
@@ -71,8 +72,8 @@ export const updateUserInformation = async (
       firstname,
       middlename,
       lastname,
-      mobilenumber
+      mobilenumber,
     },
-    'password': hashPassword
-  })
+    password: hashPassword,
+  });
 };

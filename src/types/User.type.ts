@@ -27,4 +27,8 @@ export type UpdateProfileDTO = {
   email: string;
   mobilenumber: string;
   password: string;
-}
+};
+
+export type AllergyDTO = {
+  allergy: string;
+};

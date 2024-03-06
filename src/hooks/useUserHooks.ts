@@ -23,8 +23,11 @@ export const useUserCredentials = () => {
     activeUserID: string,
     profileInformation: UpdateProfileDTO,
   ) => {
-    const record = await updateUserInformation(activeUserID, profileInformation);
-    
+    const record = await updateUserInformation(
+      activeUserID,
+      profileInformation,
+    );
+
     return record;
   };
 
