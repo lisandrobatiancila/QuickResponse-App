@@ -49,7 +49,7 @@ export default function AddNewCondition() {
               textMode={TextInputEnum.OUTLINED}
               label="Conditions"
               value={values.condition}
-              onChangeText={handleChange('condtion')}
+              onChangeText={handleChange('condition')}
             />
             <DividerComponent margin="10px 0 0 0" />
             <ButtonComponent

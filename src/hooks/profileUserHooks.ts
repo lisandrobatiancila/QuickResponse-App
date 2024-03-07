@@ -1,5 +1,6 @@
 import {
   addNewAllergies,
+  addNewConditions,
   getAllAllergies,
 } from '../service/profile/Profile.service';
 import {AllergyDTO, MedicalConditionDTO} from '../types/User.type';
@@ -23,7 +24,27 @@ export const useUserProfile = () => {
   const sendAddNewCondition = async (
     activeUserID: string,
     condition: MedicalConditionDTO,
-  ) => {};
+  ) => {
+    try {
+      const result = await addNewConditions(activeUserID, condition);
 
-  return {sendAddNewAllergies, sendGetAllAllergies, sendAddNewCondition};
+      return result;
+    } catch (err) {
+      console.log('ERR');
+      console.log(err);
+    }
+  };
+
+  const sendGetAllConditions = async (activeUserID: string) => {
+    const result = await getAllAllergies(activeUserID);
+
+    return result;
+  };
+
+  return {
+    sendAddNewAllergies,
+    sendGetAllAllergies,
+    sendAddNewCondition,
+    sendGetAllConditions,
+  };
 };
