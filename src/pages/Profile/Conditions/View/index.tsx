@@ -9,23 +9,23 @@ import {AllergyDTO} from '../../../../types/User.type';
 import {ButtonComponent} from '../../../../components/Buttons';
 import DividerComponent from '../../../../components/Divider';
 
-export default function ViewAllergies() {
+export default function ViewCondition() {
   const {sendGetAllConditions} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
-  const [allergyRecords, setAllergyRecords] = useState<AllergyDTO[]>([]);
+  const [conditionRecords, setConditionRecords] = useState<AllergyDTO[]>([]);
 
-  const getAllAllergies = async (activeUserID: string) => {
+  const getAllConditions = async (activeUserID: string) => {
     const result = await sendGetAllConditions(activeUserID);
     const records = result.data()?.allergies as AllergyDTO[];
-    setAllergyRecords(records);
+    setConditionRecords(records);
   };
 
   useEffect(() => {
-    getAllAllergies(activeUserInformation?.account?.fbID ?? '');
+    getAllConditions(activeUserInformation?.account?.fbID ?? '');
   }, []);
 
-  const listOfAllergies = useMemo(() => {
-    return allergyRecords.map((record: any, i: number) => {
+  const listOfConditions = useMemo(() => {
+    return conditionRecords.map((record: any, i: number) => {
       return (
         <View key={i}>
           <DividerComponent margin="3px 0 0 0" />
@@ -44,7 +44,7 @@ export default function ViewAllergies() {
         </View>
       );
     });
-  }, [allergyRecords]);
+  }, [conditionRecords]);
 
   return (
     <ScrollView>
@@ -60,7 +60,7 @@ export default function ViewAllergies() {
           fontSize={20}
           textAlign="center"
         />
-        {listOfAllergies}
+        {listOfConditions}
       </View>
     </ScrollView>
   );

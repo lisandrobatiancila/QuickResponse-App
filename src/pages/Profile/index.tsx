@@ -20,6 +20,7 @@ import {formatPasswordDisplay} from '../../utils/format-display';
 import AddNewAllergies from './Allergies/Add';
 import ViewAllergies from './Allergies/View';
 import AddNewCondition from './Conditions/Add';
+import ViewCondition from './Conditions/View';
 
 export default function ProfileDashBoard(props: any) {
   const {activeUserInformation} = useAccountContext();
@@ -71,7 +72,7 @@ export default function ProfileDashBoard(props: any) {
     setActiveModalView('add-allergies');
     setToggledModal(true);
   };
-  
+
   const onPressAddNewCondition = () => {
     setActiveModalView('add-condition');
     setToggledModal(true);
@@ -79,6 +80,11 @@ export default function ProfileDashBoard(props: any) {
 
   const onPressViewAllergies = () => {
     setActiveModalView('view-allergies');
+    setToggledModal(true);
+  };
+
+  const onPressViewCondition = () => {
+    setActiveModalView('view-condition');
     setToggledModal(true);
   };
 
@@ -101,6 +107,7 @@ export default function ProfileDashBoard(props: any) {
           {activeModalView === 'add-allergies' && <AddNewAllergies />}
           {activeModalView === 'view-allergies' && <ViewAllergies />}
           {activeModalView === 'add-condition' && <AddNewCondition />}
+          {activeModalView === 'view-condition' && <ViewCondition />}
         </QRModalComponent>
         <View>
           <DividerComponent margin="10px 0 0 0" />
@@ -235,6 +242,7 @@ export default function ProfileDashBoard(props: any) {
                   fontSize={15}
                   width={20}
                   textColor={COLOR_LISTS.RED_400}
+                  onPress={onPressViewCondition}
                 />
                 <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
                 <ButtonComponent
