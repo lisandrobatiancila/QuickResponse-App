@@ -21,12 +21,16 @@ import AddNewAllergies from './Allergies/Add';
 import ViewAllergies from './Allergies/View';
 import AddNewCondition from './Conditions/Add';
 import ViewCondition from './Conditions/View';
+import AddBloodType from './BloodType/Add';
+import ViewBloodType from './BloodType/View';
+import {useUserProfile} from '../../hooks/profileUserHooks';
 
 export default function ProfileDashBoard(props: any) {
   const {activeUserInformation} = useAccountContext();
   const [img, setImage] = useState<any>(
     require('../../assets/QRApp-img1.jpeg'),
   );
+  const {setActiveUserMedicalAid} = useUserProfile();
 
   const [isRemoteFile, setIsRemoteFile] = useState<boolean>(false);
   const [switchMedicalAid, setSwitchMedicalAid] = useState<boolean>(false);
@@ -66,6 +70,10 @@ export default function ProfileDashBoard(props: any) {
 
   const onToggledMedicalAid = () => {
     setSwitchMedicalAid(!switchMedicalAid);
+    setActiveUserMedicalAid(
+      activeUserInformation?.account?.fbID ?? '',
+      !switchMedicalAid,
+    );
   };
 
   const onPressAddNewAllergies = () => {
@@ -78,6 +86,11 @@ export default function ProfileDashBoard(props: any) {
     setToggledModal(true);
   };
 
+  const onPressAddBloodType = () => {
+    setActiveModalView('add-blood-type');
+    setToggledModal(true);
+  };
+
   const onPressViewAllergies = () => {
     setActiveModalView('view-allergies');
     setToggledModal(true);
@@ -85,6 +98,11 @@ export default function ProfileDashBoard(props: any) {
 
   const onPressViewCondition = () => {
     setActiveModalView('view-condition');
+    setToggledModal(true);
+  };
+
+  const onPressViewBloodType = () => {
+    setActiveModalView('view-blood-type');
     setToggledModal(true);
   };
 
@@ -108,6 +126,8 @@ export default function ProfileDashBoard(props: any) {
           {activeModalView === 'view-allergies' && <ViewAllergies />}
           {activeModalView === 'add-condition' && <AddNewCondition />}
           {activeModalView === 'view-condition' && <ViewCondition />}
+          {activeModalView === 'add-blood-type' && <AddBloodType />}
+          {activeModalView === 'view-blood-type' && <ViewBloodType />}
         </QRModalComponent>
         <View>
           <DividerComponent margin="10px 0 0 0" />
@@ -269,13 +289,15 @@ export default function ProfileDashBoard(props: any) {
                   fontSize={15}
                   width={20}
                   textColor={COLOR_LISTS.RED_400}
+                  onPress={onPressViewBloodType}
                 />
                 <TextLabel title="/" textColor={COLOR_LISTS.RED_400} />
                 <ButtonComponent
-                  title="Add"
+                  title="Set"
                   fontSize={15}
                   width={23}
                   textColor={COLOR_LISTS.RED_400}
+                  onPress={onPressAddBloodType}
                 />
               </DivComponent>
             </DivComponent>

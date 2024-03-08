@@ -36,3 +36,7 @@ export type AllergyDTO = {
 export type MedicalConditionDTO = {
   condition: string;
 };
+
+export type BloodTypeDTO = {
+  bloodType: string;
+};

@@ -1,7 +1,9 @@
-import {AllergyDTO, MedicalConditionDTO} from '../../types/User.type';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
+import {
+  AllergyDTO,
+  BloodTypeDTO,
+  MedicalConditionDTO,
+} from '../../types/User.type';
+import firestore from '@react-native-firebase/firestore';
 
 export const addNewAllergies = async (
   activeUserID: string,
@@ -47,6 +49,43 @@ export const getAllConditions = async (activeUserID: string) => {
     .collection('Conditions')
     .doc(activeUserID)
     .get();
+
+  return result;
+};
+
+export const addNewBloodType = async (
+  activeUserID: string,
+  bloodType: BloodTypeDTO,
+) => {
+  const result = await firestore()
+    .collection('BloodType')
+    .doc(activeUserID)
+    .set({
+      bloodType: bloodType.bloodType,
+    });
+
+  return result;
+};
+
+export const getBloodType = async (activeUserId: string) => {
+  const result = await firestore()
+    .collection('BloodType')
+    .doc(activeUserId)
+    .get();
+
+  return result;
+};
+
+export const setUserMedicalAidsInformation = async (
+  activeUserID: string,
+  medicalAid: boolean,
+) => {
+  const result = await firestore()
+    .collection('Medical Aid')
+    .doc(activeUserID)
+    .set({
+      medicalAid: medicalAid,
+    });
 
   return result;
 };

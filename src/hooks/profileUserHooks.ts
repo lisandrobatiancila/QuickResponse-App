@@ -1,10 +1,17 @@
 import {
   addNewAllergies,
+  addNewBloodType,
   addNewConditions,
   getAllAllergies,
   getAllConditions,
+  getBloodType,
+  setUserMedicalAidsInformation,
 } from '../service/profile/Profile.service';
-import {AllergyDTO, MedicalConditionDTO} from '../types/User.type';
+import {
+  AllergyDTO,
+  BloodTypeDTO,
+  MedicalConditionDTO,
+} from '../types/User.type';
 
 export const useUserProfile = () => {
   const sendAddNewAllergies = async (
@@ -37,10 +44,40 @@ export const useUserProfile = () => {
     return result;
   };
 
+  const sendAddNewBloodType = async (
+    activeUserID: string,
+    bloodType: BloodTypeDTO,
+  ) => {
+    const result = await addNewBloodType(activeUserID, bloodType);
+
+    return result;
+  };
+
+  const sendGetBloodType = async (activeUserID: string) => {
+    const result = await getBloodType(activeUserID);
+
+    return result;
+  };
+
+  const setActiveUserMedicalAid = async (
+    activeUserID: string,
+    medicalAid: boolean,
+  ) => {
+    const result = await setUserMedicalAidsInformation(
+      activeUserID,
+      medicalAid,
+    );
+
+    return result;
+  };
+
   return {
     sendAddNewAllergies,
     sendGetAllAllergies,
     sendAddNewCondition,
     sendGetAllConditions,
+    sendAddNewBloodType,
+    sendGetBloodType,
+    setActiveUserMedicalAid,
   };
 };
