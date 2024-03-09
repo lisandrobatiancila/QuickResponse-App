@@ -6,10 +6,14 @@ import {
   getAllConditions,
   getBloodType,
   setUserMedicalAidsInformation,
+  getUserMedicalAidsInformation,
+  addNewContacts,
+  getAllContactsFromDB,
 } from '../service/profile/Profile.service';
 import {
   AllergyDTO,
   BloodTypeDTO,
+  ContactDTO,
   MedicalConditionDTO,
 } from '../types/User.type';
 
@@ -71,6 +75,24 @@ export const useUserProfile = () => {
     return result;
   };
 
+  const getActiveUserMedicalAidsInformation = async (activeUserID: string) => {
+    const result = await getUserMedicalAidsInformation(activeUserID);
+
+    return result;
+  };
+
+  const sendAddNewContacts = async (activeUserID: string, contactInfo: ContactDTO) => {
+    const result = await addNewContacts(activeUserID, contactInfo);
+
+    return result;
+  };
+
+  const sendGetAllContacts = async (activeUserID: string) => {
+    const result = await getAllContactsFromDB(activeUserID);
+
+    return result;
+  };
+
   return {
     sendAddNewAllergies,
     sendGetAllAllergies,
@@ -79,5 +101,9 @@ export const useUserProfile = () => {
     sendAddNewBloodType,
     sendGetBloodType,
     setActiveUserMedicalAid,
+    getUserMedicalAidsInformation,
+    getActiveUserMedicalAidsInformation,
+    sendAddNewContacts,
+    sendGetAllContacts,
   };
 };

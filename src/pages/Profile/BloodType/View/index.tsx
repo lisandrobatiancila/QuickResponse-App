@@ -36,7 +36,7 @@ export default function ViewBloodType() {
         <TextLabel
           title={bloodTypeRecord?.bloodType}
           textAlign="center"
-          fontSize={50}
+          fontSize={80}
           textColor={COLOR_LISTS.RED_400}
         />
       </View>

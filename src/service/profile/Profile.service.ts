@@ -1,6 +1,7 @@
 import {
   AllergyDTO,
   BloodTypeDTO,
+  ContactDTO,
   MedicalConditionDTO,
 } from '../../types/User.type';
 import firestore from '@react-native-firebase/firestore';
@@ -86,6 +87,26 @@ export const setUserMedicalAidsInformation = async (
     .set({
       medicalAid: medicalAid,
     });
+
+  return result;
+};
+
+export const getUserMedicalAidsInformation = async (activeUserID: string) => {
+  const result = await firestore().collection('Medical Aid').doc(activeUserID).get();
+
+  return result;
+}
+
+export const addNewContacts = async (activeUserID: string, contacts: ContactDTO) => {
+  const result = await firestore().collection('Contacts').doc(activeUserID).set({
+    contacts: firestore.FieldValue.arrayUnion(contacts)
+  }, {merge: true});
+
+  return result;
+};
+
+export const getAllContactsFromDB = async (activeUserID: string) => {
+  const result = await firestore().collection('Contacts').doc(activeUserID).get();
 
   return result;
 };

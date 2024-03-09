@@ -40,3 +40,8 @@ export type MedicalConditionDTO = {
 export type BloodTypeDTO = {
   bloodType: string;
 };
+
+export type ContactDTO = {
+  name: string;
+  contactno: string;
+}

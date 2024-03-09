@@ -51,7 +51,7 @@ export const QRModalComponent = (props: QRModalComponentProps) => {
             height={40}
             fontSize={30}
             marginTop={10}
-            marginRight={5}
+            marginRight={10}
             backgroundColor={COLOR_LISTS.RED_500}
             borderRadius={100}
             texAlign={TextAlignmentEnum.CENTER}
