@@ -20,7 +20,7 @@ export default function AddNewContacts() {
   const {sendAddNewContacts} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
 
-  const onSaveCondtion = async (values: ContactDTO) => {
+  const onSaveContacts = async (values: ContactDTO) => {
     await sendAddNewContacts(
       activeUserInformation?.account?.fbID ?? '',
       values,
@@ -41,7 +41,7 @@ export default function AddNewContacts() {
       <Formik
         initialValues={initValues}
         onSubmit={(values: ContactDTO, {resetForm}) => {
-          onSaveCondtion(values);
+          onSaveContacts(values);
           resetForm();
         }}>
         {({handleSubmit, handleChange, values}) => (

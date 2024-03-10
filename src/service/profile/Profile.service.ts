@@ -92,21 +92,48 @@ export const setUserMedicalAidsInformation = async (
 };
 
 export const getUserMedicalAidsInformation = async (activeUserID: string) => {
-  const result = await firestore().collection('Medical Aid').doc(activeUserID).get();
+  const result = await firestore()
+    .collection('Medical Aid')
+    .doc(activeUserID)
+    .get();
 
   return result;
-}
+};
 
-export const addNewContacts = async (activeUserID: string, contacts: ContactDTO) => {
-  const result = await firestore().collection('Contacts').doc(activeUserID).set({
-    contacts: firestore.FieldValue.arrayUnion(contacts)
-  }, {merge: true});
+export const addNewContacts = async (
+  activeUserID: string,
+  contacts: ContactDTO,
+) => {
+  const result = await firestore()
+    .collection('Contacts')
+    .doc(activeUserID)
+    .set(
+      {
+        contacts: firestore.FieldValue.arrayUnion(contacts),
+      },
+      {merge: true},
+    );
 
   return result;
 };
 
 export const getAllContactsFromDB = async (activeUserID: string) => {
-  const result = await firestore().collection('Contacts').doc(activeUserID).get();
+  const result = await firestore()
+    .collection('Contacts')
+    .doc(activeUserID)
+    .get();
+
+  return result;
+};
+
+export const editContactInformation = async (
+  activeUserID: string,
+  contactInfo: ContactDTO,
+) => {
+  const result = await firestore()
+    .collection('Contacts')
+    .doc(activeUserID)
+    .update({'contacts[0]': 'tests'});
 
   return result;
 };

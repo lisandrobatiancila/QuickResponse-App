@@ -24,7 +24,6 @@ import ViewCondition from './Conditions/View';
 import AddBloodType from './BloodType/Add';
 import ViewBloodType from './BloodType/View';
 import {useUserProfile} from '../../hooks/profileUserHooks';
-import { MedicalConditionDTO } from '../../types/User.type';
 import AddNewContacts from './Contacts/Add';
 import ViewContacts from './Contacts/View';
 
@@ -33,7 +32,8 @@ export default function ProfileDashBoard(props: any) {
   const [img, setImage] = useState<any>(
     require('../../assets/QRApp-img1.jpeg'),
   );
-  const {setActiveUserMedicalAid, getActiveUserMedicalAidsInformation} = useUserProfile();
+  const {setActiveUserMedicalAid, getActiveUserMedicalAidsInformation} =
+    useUserProfile();
 
   const [isRemoteFile, setIsRemoteFile] = useState<boolean>(false);
   const [switchMedicalAid, setSwitchMedicalAid] = useState<boolean>(false);
@@ -118,7 +118,9 @@ export default function ProfileDashBoard(props: any) {
   };
 
   const getDoMedicalAidInformation = async () => {
-    const result = await getActiveUserMedicalAidsInformation(activeUserInformation?.account?.fbID ?? '');
+    const result = await getActiveUserMedicalAidsInformation(
+      activeUserInformation?.account?.fbID ?? '',
+    );
     setSwitchMedicalAid(result?.data()?.medicalAid as boolean);
   };
 
@@ -349,9 +351,27 @@ export default function ProfileDashBoard(props: any) {
           <DividerComponent margin="10px 0 0 0" />
           <S.ProfileBadgeContainer borderColor={COLOR_LISTS.RED_400} width="90">
             <DivComponent display="flex" flexDirection="row" padding="5">
-              <ButtonComponent title="View Contacts" textAlign="center" backgroundColor={COLOR_LISTS.YELLOW_800} borderRadius="5" fontSize={18} textColor={COLOR_LISTS.WHITE} padding="5" onPress={onViewContacts} />
+              <ButtonComponent
+                title="View Contacts"
+                textAlign="center"
+                backgroundColor={COLOR_LISTS.YELLOW_800}
+                borderRadius="5"
+                fontSize={18}
+                textColor={COLOR_LISTS.WHITE}
+                padding="5"
+                onPress={onViewContacts}
+              />
               <View style={{paddingLeft: 2}} />
-              <ButtonComponent title="Add Contacts" textAlign="center" backgroundColor={COLOR_LISTS.GREEN_400} borderRadius="5" fontSize={18} textColor={COLOR_LISTS.WHITE} padding="5" onPress={onAddNewContacts} />
+              <ButtonComponent
+                title="Add Contacts"
+                textAlign="center"
+                backgroundColor={COLOR_LISTS.GREEN_400}
+                borderRadius="5"
+                fontSize={18}
+                textColor={COLOR_LISTS.WHITE}
+                padding="5"
+                onPress={onAddNewContacts}
+              />
             </DivComponent>
           </S.ProfileBadgeContainer>
           <DividerComponent margin="10px 0 0 0" />

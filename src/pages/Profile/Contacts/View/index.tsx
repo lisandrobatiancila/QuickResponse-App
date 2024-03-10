@@ -1,39 +1,102 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import TextLabel from '../../../../components/TextLabel';
 import {COLOR_LISTS} from '../../../../constants/colors';
 import {APP_HEIGHT, APP_WIDTH} from '../../../../constants/dimensions';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {ContactDTO} from '../../../../types/User.type';
+import {CardComponent} from '../../../../components/Card';
+import DivComponent from '../../../../components/DivContainer';
+import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DividerComponent from '../../../../components/Divider';
-import { CardComponent } from '../../../../components/Card';
+import EditContacts from '../Edit';
 
 export default function ViewContacts() {
   const {sendGetAllContacts} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
-  const [contactRecords, setConditionRecords] = useState<ContactDTO[]>([]);
+  const [contactRecords, setContactRecords] = useState<ContactDTO[]>([]);
+  const [editCertainContact, setEditCertainContact] =
+    useState<ContactDTO | null>(null);
+  const [isEditAction, setIsEditAction] = useState<boolean>(false);
 
   const getAllContacts = async (activeUserID: string) => {
     const result = await sendGetAllContacts(activeUserID);
     const records = result?.data()?.contacts as ContactDTO[];
 
-    setConditionRecords(records);
-};
+    setContactRecords(records);
+  };
 
   useEffect(() => {
     getAllContacts(activeUserInformation?.account?.fbID ?? '');
   }, []);
 
+  const onEditContact = (record: ContactDTO) => {
+    setIsEditAction(true);
+    setEditCertainContact(record);
+  };
+
+  const onCancelEdit = () => {
+    setIsEditAction(false);
+  };
+
   const listOfContacts = useMemo(() => {
-    return contactRecords.map((record: ContactDTO, i: number) => {
+    if (contactRecords) {
+      return contactRecords.map((record: ContactDTO, i: number) => {
+        return (
+          <CardComponent
+            key={i}
+            width={100}
+            height={20}
+            backgroundColor={COLOR_LISTS.BLUE_500}
+            padding={10}
+            borderRadius={6}
+            margin="3px 0 0 0">
+            <DivComponent
+              flexDirection="row"
+              justifyContent="space-evenly"
+              width="100"
+              backgroundColor={COLOR_LISTS.RED}>
+              <DivComponent backgroundColor={COLOR_LISTS.BLUE_500} width="80">
+                <TextLabel title={`Name: ${record.name}`} fontSize={18} />
+                <TextLabel
+                  title={`Contactno: ${record.contactno}`}
+                  fontSize={18}
+                />
+              </DivComponent>
+              <DivComponent
+                backgroundColor={COLOR_LISTS.BLUE_500}
+                width="22"
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center">
+                <TouchableOpacity onPress={() => onEditContact(record)}>
+                  <FontAwesome6Icon
+                    name={'pen'}
+                    size={20}
+                    color={COLOR_LISTS.WHITE}
+                  />
+                </TouchableOpacity>
+                <DividerComponent margin="0 10px 0 0" />
+                <TouchableOpacity>
+                  <FontAwesome6Icon
+                    name={'trash'}
+                    size={20}
+                    color={COLOR_LISTS.WHITE}
+                  />
+                </TouchableOpacity>
+              </DivComponent>
+            </DivComponent>
+          </CardComponent>
+        );
+      });
+    } else {
       return (
-        <CardComponent width={100} height={20} backgroundColor={COLOR_LISTS.RED} padding={10} borderRadius={6} margin="3px 0 0 0">
-            <TextLabel title={`Name: ${record.name}`} fontSize={18} />
-            <TextLabel title={`Contactno: ${record.contactno}`} fontSize={18} />
-        </CardComponent>
+        <DivComponent>
+          <TextLabel title="No contact records." />
+        </DivComponent>
       );
-    });
+    }
   }, [contactRecords]);
 
   return (
@@ -46,11 +109,17 @@ export default function ViewContacts() {
           padding: 10,
         }}>
         <TextLabel
-          title="List of all contacts"
+          title={!isEditAction ? 'List of all contacts' : 'Edit contacts'}
           fontSize={20}
           textAlign="center"
         />
-        {listOfContacts}
+        {!isEditAction && listOfContacts}
+        {isEditAction && (
+          <EditContacts
+            contactRecords={editCertainContact}
+            onCancelEdit={onCancelEdit}
+          />
+        )}
       </View>
     </ScrollView>
   );

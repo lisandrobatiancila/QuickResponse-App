@@ -9,6 +9,7 @@ import {
   getUserMedicalAidsInformation,
   addNewContacts,
   getAllContactsFromDB,
+  editContactInformation,
 } from '../service/profile/Profile.service';
 import {
   AllergyDTO,
@@ -81,7 +82,10 @@ export const useUserProfile = () => {
     return result;
   };
 
-  const sendAddNewContacts = async (activeUserID: string, contactInfo: ContactDTO) => {
+  const sendAddNewContacts = async (
+    activeUserID: string,
+    contactInfo: ContactDTO,
+  ) => {
     const result = await addNewContacts(activeUserID, contactInfo);
 
     return result;
@@ -89,6 +93,15 @@ export const useUserProfile = () => {
 
   const sendGetAllContacts = async (activeUserID: string) => {
     const result = await getAllContactsFromDB(activeUserID);
+
+    return result;
+  };
+
+  const sendEditContacts = async (
+    activeUserID: string,
+    contactInfo: ContactDTO,
+  ) => {
+    const result = editContactInformation(activeUserID, contactInfo);
 
     return result;
   };
@@ -105,5 +118,6 @@ export const useUserProfile = () => {
     getActiveUserMedicalAidsInformation,
     sendAddNewContacts,
     sendGetAllContacts,
+    sendEditContacts,
   };
 };
