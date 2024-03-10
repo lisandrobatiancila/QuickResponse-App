@@ -19,6 +19,7 @@ export default function ViewContacts() {
   const [editCertainContact, setEditCertainContact] =
     useState<ContactDTO | null>(null);
   const [isEditAction, setIsEditAction] = useState<boolean>(false);
+  const [editCertainContactID, setEditCertainContactID] = useState<number>(0);
 
   const getAllContacts = async (activeUserID: string) => {
     const result = await sendGetAllContacts(activeUserID);
@@ -31,9 +32,10 @@ export default function ViewContacts() {
     getAllContacts(activeUserInformation?.account?.fbID ?? '');
   }, []);
 
-  const onEditContact = (record: ContactDTO) => {
+  const onEditContact = (record: ContactDTO, index: number) => {
     setIsEditAction(true);
     setEditCertainContact(record);
+    setEditCertainContactID(index);
   };
 
   const onCancelEdit = () => {
@@ -70,7 +72,7 @@ export default function ViewContacts() {
                 flexDirection="row"
                 justifyContent="center"
                 alignItems="center">
-                <TouchableOpacity onPress={() => onEditContact(record)}>
+                <TouchableOpacity onPress={() => onEditContact(record, i)}>
                   <FontAwesome6Icon
                     name={'pen'}
                     size={20}
@@ -117,6 +119,8 @@ export default function ViewContacts() {
         {isEditAction && (
           <EditContacts
             contactRecords={editCertainContact}
+            originalContactInfo={contactRecords}
+            index={editCertainContactID}
             onCancelEdit={onCancelEdit}
           />
         )}

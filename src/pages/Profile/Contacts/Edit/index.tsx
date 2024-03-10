@@ -14,6 +14,8 @@ import DivComponent from '../../../../components/DivContainer';
 type EditContactsProps = {
   onCancelEdit: () => void;
   contactRecords: ContactDTO | null;
+  originalContactInfo: ContactDTO[];
+  index: number;
 };
 
 export default function EditContacts(props: EditContactsProps) {

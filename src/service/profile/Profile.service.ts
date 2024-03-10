@@ -128,12 +128,19 @@ export const getAllContactsFromDB = async (activeUserID: string) => {
 
 export const editContactInformation = async (
   activeUserID: string,
-  contactInfo: ContactDTO,
+  editedContactInfoID: number,
+  editedContactInfo: ContactDTO,
+  originalContactInfo: ContactDTO[],
 ) => {
-  const result = await firestore()
-    .collection('Contacts')
-    .doc(activeUserID)
-    .update({'contacts[0]': 'tests'});
+  console.log(originalContactInfo);
+  originalContactInfo.map((value: ContactDTO, index: number) => {
+    if (index === editedContactInfoID) {
+      value.name = editedContactInfo.name;
+      value.contactno = editedContactInfo.contactno;
+    }
 
-  return result;
+    return value;
+  });
+
+  console.log(originalContactInfo);
 };

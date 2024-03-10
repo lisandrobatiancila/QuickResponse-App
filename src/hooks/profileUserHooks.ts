@@ -99,9 +99,16 @@ export const useUserProfile = () => {
 
   const sendEditContacts = async (
     activeUserID: string,
-    contactInfo: ContactDTO,
+    editedContactInfoID: number,
+    editedContactInfo: ContactDTO,
+    originalContactInfo: ContactDTO[],
   ) => {
-    const result = editContactInformation(activeUserID, contactInfo);
+    const result = editContactInformation(
+      activeUserID,
+      editedContactInfoID,
+      editedContactInfo,
+      originalContactInfo,
+    );
 
     return result;
   };
