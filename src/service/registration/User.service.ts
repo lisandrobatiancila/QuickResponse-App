@@ -1,5 +1,5 @@
 import {RegistrationDTO} from '../../types/Registration.type';
-import {LoginDTO, UserDTO} from '../../types/User.type';
+import {LoginDTO, UpdateProfileDTO, UserDTO} from '../../types/User.type';
 import firestore from '@react-native-firebase/firestore';
 import {sha256} from 'react-native-sha256';
 
@@ -57,4 +57,23 @@ export const loginUser = async (
   }
 
   return activeUser;
+};
+
+export const updateUserInformation = async (
+  activeUserID: string,
+  profileInformation: UpdateProfileDTO,
+) => {
+  const {firstname, middlename, lastname, mobilenumber, password} =
+    profileInformation;
+  let hashPassword = await sha256(password);
+
+  firestore().collection('Users').doc(activeUserID).update({
+    account: {
+      firstname,
+      middlename,
+      lastname,
+      mobilenumber,
+    },
+    password: hashPassword,
+  });
 };

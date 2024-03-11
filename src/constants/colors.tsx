@@ -38,4 +38,11 @@ export const COLOR_LISTS = {
   GREY_300: '#e0e0e0',
   GREY_400: '#bdbdbd',
   GREY_500: '#9e9e9e',
+  GREEN: '#4caf50',
+  GREEN_400: '#66bb6a',
+  GREEN_500: '#4caf50',
+  GREEN_600: '#43a047',
+  GREEN_700: '#388e3c',
+  GREEN_800: '#2e7d32',
+  GREEN_900: '#1b5e20',
 };
