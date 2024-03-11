@@ -19,7 +19,7 @@ type EditContactsProps = {
 };
 
 export default function EditContacts(props: EditContactsProps) {
-  const {onCancelEdit, contactRecords} = props;
+  const {onCancelEdit, contactRecords, originalContactInfo, index} = props;
 
   const initValues: ContactDTO = {
     name: contactRecords?.name as string,
@@ -29,7 +29,15 @@ export default function EditContacts(props: EditContactsProps) {
   const {activeUserInformation} = useAccountContext();
 
   const onEditContacts = async (values: ContactDTO) => {
-    await sendEditContacts(activeUserInformation?.account?.fbID ?? '', values);
+    initValues.name = values.name;
+    initValues.contactno = values.contactno;
+
+    await sendEditContacts(
+      activeUserInformation?.account?.fbID ?? '',
+      index,
+      values,
+      originalContactInfo,
+    );
     ToastAndroid.show('Contact information was updated.', ToastAndroid.SHORT);
   };
 
@@ -38,9 +46,8 @@ export default function EditContacts(props: EditContactsProps) {
       <DividerComponent margin="10px 0 0 0" />
       <Formik
         initialValues={initValues}
-        onSubmit={(values: ContactDTO, {resetForm}) => {
+        onSubmit={(values: ContactDTO) => {
           onEditContacts(values);
-          resetForm();
         }}>
         {({handleSubmit, handleChange, values}) => (
           <>

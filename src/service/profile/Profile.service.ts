@@ -132,7 +132,6 @@ export const editContactInformation = async (
   editedContactInfo: ContactDTO,
   originalContactInfo: ContactDTO[],
 ) => {
-  console.log(originalContactInfo);
   originalContactInfo.map((value: ContactDTO, index: number) => {
     if (index === editedContactInfoID) {
       value.name = editedContactInfo.name;
@@ -142,5 +141,10 @@ export const editContactInformation = async (
     return value;
   });
 
-  console.log(originalContactInfo);
+  const result = await firestore()
+    .collection('Contacts')
+    .doc(activeUserID)
+    .update({contacts: originalContactInfo});
+
+  return result;
 };
