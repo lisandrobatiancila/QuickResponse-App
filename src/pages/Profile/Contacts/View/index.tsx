@@ -13,7 +13,7 @@ import DividerComponent from '../../../../components/Divider';
 import EditContacts from '../Edit';
 
 export default function ViewContacts() {
-  const {sendGetAllContacts} = useUserProfile();
+  const {sendGetAllContacts, deleteContactInformation} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
   const [contactRecords, setContactRecords] = useState<ContactDTO[]>([]);
   const [editCertainContact, setEditCertainContact] =
@@ -40,6 +40,14 @@ export default function ViewContacts() {
 
   const onCancelEdit = () => {
     setIsEditAction(false);
+  };
+
+  const onRemoveCertainContact = async (record: ContactDTO) => {
+    await deleteContactInformation(
+      activeUserInformation?.account?.fbID ?? '',
+      record,
+      contactRecords
+    );
   };
 
   const listOfContacts = useMemo(() => {
@@ -80,7 +88,8 @@ export default function ViewContacts() {
                   />
                 </TouchableOpacity>
                 <DividerComponent margin="0 10px 0 0" />
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => onRemoveCertainContact(record)}>
                   <FontAwesome6Icon
                     name={'trash'}
                     size={20}

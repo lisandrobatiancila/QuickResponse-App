@@ -10,6 +10,7 @@ import {
   addNewContacts,
   getAllContactsFromDB,
   editContactInformation,
+  removeContactInformation,
 } from '../service/profile/Profile.service';
 import {
   AllergyDTO,
@@ -113,6 +114,25 @@ export const useUserProfile = () => {
     return result;
   };
 
+  const deleteContactInformation = async (
+    activeUserID: string,
+    recordInformation: ContactDTO,
+    contactRecords: ContactDTO[],
+  ) => {
+    const newContactRecord = contactRecords.filter(
+      record =>
+        record.name !== recordInformation.name &&
+        record.contactno !== recordInformation.contactno,
+    );
+
+    const result = await removeContactInformation(
+      activeUserID,
+      newContactRecord,
+    );
+
+    return result;
+  };
+
   return {
     sendAddNewAllergies,
     sendGetAllAllergies,
@@ -126,5 +146,6 @@ export const useUserProfile = () => {
     sendAddNewContacts,
     sendGetAllContacts,
     sendEditContacts,
+    deleteContactInformation,
   };
 };
