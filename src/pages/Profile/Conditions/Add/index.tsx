@@ -11,6 +11,7 @@ import {Formik} from 'formik';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {MedicalConditionDTO} from '../../../../types/User.type';
+import * as Yup from 'yup';
 
 export default function AddNewCondition() {
   const initValues: MedicalConditionDTO = {
@@ -18,6 +19,9 @@ export default function AddNewCondition() {
   };
   const {sendAddNewCondition} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
+  const conditionValidationSchema = Yup.object().shape({
+    condition: Yup.string().required('Please specify the condition.'),
+  });
 
   const onSaveCondtion = async (values: MedicalConditionDTO) => {
     await sendAddNewCondition(
@@ -42,9 +46,16 @@ export default function AddNewCondition() {
         onSubmit={(values: MedicalConditionDTO, {resetForm}) => {
           onSaveCondtion(values);
           resetForm();
-        }}>
-        {({handleSubmit, handleChange, values}) => (
+        }}
+        validationSchema={conditionValidationSchema}>
+        {({handleSubmit, handleChange, values, errors}) => (
           <>
+            {errors?.condition && (
+              <TextLabel
+                title={`${errors?.condition}`}
+                textColor={COLOR_LISTS.RED}
+              />
+            )}
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
               label="Conditions"

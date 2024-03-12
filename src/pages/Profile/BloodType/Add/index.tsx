@@ -11,6 +11,7 @@ import {Formik} from 'formik';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {BloodTypeDTO} from '../../../../types/User.type';
+import * as Yup from 'yup';
 
 export default function AddBloodType() {
   const initValues: BloodTypeDTO = {
@@ -18,6 +19,10 @@ export default function AddBloodType() {
   };
   const {sendAddNewBloodType} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
+
+  const bloodTypeValidationSchema = Yup.object().shape({
+    bloodType: Yup.string().required('Please specify your Bloodtype'),
+  });
 
   const onSaveBloodType = async (values: BloodTypeDTO) => {
     await sendAddNewBloodType(
@@ -39,12 +44,19 @@ export default function AddBloodType() {
       <DividerComponent margin="10px 0 0 0" />
       <Formik
         initialValues={initValues}
+        validationSchema={bloodTypeValidationSchema}
         onSubmit={(values: BloodTypeDTO, {resetForm}) => {
           onSaveBloodType(values);
           resetForm();
         }}>
-        {({handleSubmit, handleChange, values}) => (
+        {({handleChange, handleSubmit, values, errors}) => (
           <>
+            {errors?.bloodType && (
+              <TextLabel
+                title={`${values.bloodType}`}
+                textColor={`${COLOR_LISTS.RED}`}
+              />
+            )}
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
               label="Bloodtype"
