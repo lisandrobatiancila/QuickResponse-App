@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import TextLabel from '../../../../components/TextLabel';
 import {COLOR_LISTS} from '../../../../constants/colors';
 import {APP_HEIGHT, APP_WIDTH} from '../../../../constants/dimensions';
@@ -46,8 +46,10 @@ export default function ViewContacts() {
     await deleteContactInformation(
       activeUserInformation?.account?.fbID ?? '',
       record,
-      contactRecords
+      contactRecords,
     );
+
+    ToastAndroid.show('Contact was removed.', ToastAndroid.SHORT);
   };
 
   const listOfContacts = useMemo(() => {
