@@ -11,6 +11,7 @@ import {Formik} from 'formik';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {ContactDTO} from '../../../../types/User.type';
+import * as Yup from 'yup';
 
 export default function AddNewContacts() {
   const initValues: ContactDTO = {
@@ -19,6 +20,11 @@ export default function AddNewContacts() {
   };
   const {sendAddNewContacts} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
+
+  const contactValidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    contactno: Yup.string().required('Contact is required'),
+  });
 
   const onSaveContacts = async (values: ContactDTO) => {
     await sendAddNewContacts(
@@ -40,18 +46,31 @@ export default function AddNewContacts() {
       <DividerComponent margin="10px 0 0 0" />
       <Formik
         initialValues={initValues}
+        validationSchema={contactValidationSchema}
         onSubmit={(values: ContactDTO, {resetForm}) => {
           onSaveContacts(values);
           resetForm();
         }}>
-        {({handleSubmit, handleChange, values}) => (
+        {({handleSubmit, handleChange, values, errors}) => (
           <>
+            {errors?.name && (
+              <TextLabel
+                title={`${errors?.name}`}
+                textColor={COLOR_LISTS.RED_400}
+              />
+            )}
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
               label="Name"
               value={values.name}
               onChangeText={handleChange('name')}
             />
+            {errors?.contactno && (
+              <TextLabel
+                title={`${errors?.contactno}`}
+                textColor={COLOR_LISTS.RED_400}
+              />
+            )}
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
               label="Phone#"

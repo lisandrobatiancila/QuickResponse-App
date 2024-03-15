@@ -53,7 +53,7 @@ export default function AddBloodType() {
           <>
             {errors?.bloodType && (
               <TextLabel
-                title={`${values.bloodType}`}
+                title={`${errors.bloodType}`}
                 textColor={`${COLOR_LISTS.RED}`}
               />
             )}
