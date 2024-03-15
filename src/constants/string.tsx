@@ -37,4 +37,17 @@ export enum TextAlignmentEnum {
   RIGHT = 'right',
   AUTO = 'auto',
   JUSTIFY = 'justify'
-}
+};
+
+export const FIRST_AID_LIST = [
+  'Burns',
+  'Drown',
+  'Fracture',
+  'Impaled',
+  'Cuts',
+  'Laceration',
+  'Choke / Choking',
+  'Nosebleeds',
+  'Frostbite',
+  'Bee Stings',
+];
