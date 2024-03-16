@@ -17,5 +17,5 @@ export const CardContainer = styled(View)<CardContainerProps>`
     background: ${(props: CardContainerProps) => props.backgroundColor ?? COLOR_LISTS.WHITE};
     padding: ${(props: CardContainerProps) => props.padding ?? 0}px;
     border-radius: ${(props: CardContainerProps) => props.borderRadius ?? 0}px;
-    margin: ${(props: CardContainerProps) => props.margin ?? 0};
+    margin: ${(props: CardContainerProps) => props.margin ?? 0}px;
 `;

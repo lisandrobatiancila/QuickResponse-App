@@ -8,6 +8,7 @@ import DashBoard from './src/pages/Dashboard';
 import {COLOR_LISTS} from './src/constants/colors';
 import {AccountProvider} from './src/providers/AccountProvider';
 import EditPersonalInformationComponent from './src/pages/Profile/EditPersonalInformation';
+import FirstAidInformation from './src/pages/FirstAids/FirstAid-Information';
 
 const StackNavigator = createNativeStackNavigator();
 
@@ -44,6 +45,7 @@ function App() {
             }}
           />
           <StackNavigator.Screen name='Edit Profile' component={EditPersonalInformationComponent} />
+          <StackNavigator.Screen name='FirstAid-Information' component={FirstAidInformation} />
         </StackNavigator.Navigator>
       </NavigationContainer>
     </AccountProvider>

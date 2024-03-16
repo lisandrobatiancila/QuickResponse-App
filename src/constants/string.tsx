@@ -39,15 +39,15 @@ export enum TextAlignmentEnum {
   JUSTIFY = 'justify'
 };
 
-export const FIRST_AID_LIST = [
-  'Burns',
-  'Drown',
-  'Fracture',
-  'Impaled',
-  'Cuts',
-  'Laceration',
-  'Choke / Choking',
-  'Nosebleeds',
-  'Frostbite',
-  'Bee Stings',
+export const FIRST_AID_LIST: {firstAidID: number, firstAidTitle: string, description: string}[] = [
+  {firstAidID: 1, firstAidTitle: 'burns', description: ""},
+  {firstAidID: 2, firstAidTitle: 'drown', description: ""},
+  {firstAidID: 3, firstAidTitle: 'fracture', description: ""},
+  {firstAidID: 4, firstAidTitle: 'impaled', description: ""},
+  {firstAidID: 5, firstAidTitle: 'cuts', description: ""},
+  {firstAidID: 6, firstAidTitle: 'laceration', description: ""},
+  {firstAidID: 7, firstAidTitle: 'choke / choking', description: ""},
+  {firstAidID: 8, firstAidTitle: 'nosebleeds', description: ""},
+  {firstAidID: 9, firstAidTitle: 'frostbite', description: ""},
+  {firstAidID: 10, firstAidTitle: 'bee stings', description: ""},
 ];
