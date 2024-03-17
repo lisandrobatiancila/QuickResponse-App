@@ -44,8 +44,15 @@ function App() {
               headerShown: false,
             }}
           />
-          <StackNavigator.Screen name='Edit Profile' component={EditPersonalInformationComponent} />
-          <StackNavigator.Screen name='FirstAid-Information' component={FirstAidInformation} />
+          <StackNavigator.Screen
+            name="Edit Profile"
+            component={EditPersonalInformationComponent}
+          />
+          <StackNavigator.Screen
+            name="FirstAid-Information"
+            component={FirstAidInformation}
+            options={{title: 'First Aid Information'}}
+          />
         </StackNavigator.Navigator>
       </NavigationContainer>
     </AccountProvider>
