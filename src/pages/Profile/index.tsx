@@ -193,6 +193,7 @@ export default function ProfileDashBoard(props: any) {
             <TextInputComponent
               value={activeUserInformation?.account?.firstname}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
             <DividerComponent margin="3px 0 0 0" />
@@ -201,6 +202,7 @@ export default function ProfileDashBoard(props: any) {
             <TextInputComponent
               value={activeUserInformation?.account?.middlename}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
             <DividerComponent margin="3px 0 0 0" />
@@ -209,6 +211,7 @@ export default function ProfileDashBoard(props: any) {
             <TextInputComponent
               value={activeUserInformation?.account?.lastname}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
             <DividerComponent margin="3px 0 0 0" />
@@ -217,6 +220,7 @@ export default function ProfileDashBoard(props: any) {
             <TextInputComponent
               value={activeUserInformation?.credentials?.loginEmail}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
             <DividerComponent margin="3px 0 0 0" />
@@ -227,6 +231,7 @@ export default function ProfileDashBoard(props: any) {
                 activeUserInformation?.credentials?.loginPassword,
               )}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
             <DividerComponent margin="3px 0 0 0" />
@@ -235,6 +240,7 @@ export default function ProfileDashBoard(props: any) {
             <TextInputComponent
               value={activeUserInformation?.account?.mobilenumber}
               textMode={TextInputEnum.OUTLINED}
+              textColor={COLOR_LISTS.GREY_500}
               disabled
             />
           </S.ProfileBadgeContainer>
