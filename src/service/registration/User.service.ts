@@ -62,18 +62,36 @@ export const loginUser = async (
 export const updateUserInformation = async (
   activeUserID: string,
   profileInformation: UpdateProfileDTO,
+  hasChangedPassword: boolean
 ) => {
   const {firstname, middlename, lastname, mobilenumber, password} =
     profileInformation;
   let hashPassword = await sha256(password);
 
-  firestore().collection('Users').doc(activeUserID).update({
-    account: {
-      firstname,
-      middlename,
-      lastname,
-      mobilenumber,
-    },
-    password: hashPassword,
-  });
+  if (hasChangedPassword) {
+    firestore().collection('Users').doc(activeUserID).update({
+      account: {
+        firstname,
+        middlename,
+        lastname,
+        mobilenumber,
+      },
+      password: hashPassword,
+    });
+  } else {
+    firestore().collection('Users').doc(activeUserID).update({
+      account: {
+        firstname,
+        middlename,
+        lastname,
+        mobilenumber,
+      },
+    });
+  }
+};
+
+export const setActiveUserInformation = async (fbID: string) => {
+  const record = await firestore().collection('Users').doc(fbID).get();
+  
+  return record;
 };

@@ -50,6 +50,9 @@ export default function Registration(props: any) {
         );
         props.navigation.navigate('Login');
       }
+      else {
+        // user already exists
+      }
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
     }
@@ -60,7 +63,6 @@ export default function Registration(props: any) {
       <View
         style={{
           justifyContent: 'center',
-          // height: Dimensions.get('window').height - 100,
           padding: 10,
         }}>
         <DivComponent alignItems="center">

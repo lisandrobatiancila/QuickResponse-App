@@ -6,14 +6,37 @@ import {APP_WIDTH} from '../../constants/dimensions';
 import ImageComponent from '../../components/ImageContainer';
 import { COLOR_LISTS } from '../../constants/colors';
 import { useEffect } from 'react';
-import firestore from '@react-native-firebase/firestore';
+import { getAsyncStorage } from '../../utils/utility';
+import { STORAGE_KEY } from '../../constants/string';
+import { useUserCredentials } from '../../hooks/useUserHooks';
 
 export default function Home(props: any) {
   const {navigation} = props;
+  const {sendActiveUserInformation} = useUserCredentials();
+
+  
+
+  const checkIfUserHasLoggedInAlready = async () => {
+    const fbID = await getAsyncStorage(STORAGE_KEY.FB_ID);
+    console.log('FBID >>> ', fbID);
+    
+    if (fbID) {
+      const result = await sendActiveUserInformation(fbID);
+      console.log('RESS >>>');
+      console.log(result);
+      
+      // navigation.navigate('Dashboard');
+    }
+    return;
+  }
 
   function onGetStarted() {
     navigation.navigate('Login');
   }
+
+  useEffect(() => {
+    checkIfUserHasLoggedInAlready();
+  }, []);
 
   return (
     <View>

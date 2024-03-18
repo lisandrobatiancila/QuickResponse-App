@@ -45,6 +45,8 @@ export default function ProfileDashBoard(props: any) {
   }, []);
 
   useEffect(() => {
+    console.log(props.route.name);
+    
     if (!isRemoteFile) {
       setImage(require('../../assets/QRApp-img1.jpeg'));
     }

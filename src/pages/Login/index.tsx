@@ -14,6 +14,8 @@ import {Formik, validateYupSchema} from 'formik';
 import {useAccountContext} from '../../providers/AccountProvider';
 import {useUserCredentials} from '../../hooks/useUserHooks';
 import * as Yup from 'yup';
+import { setAsyncStorage } from '../../utils/utility';
+import { STORAGE_KEY } from '../../constants/string';
 
 export default function Login(props: any) {
   const initValues: LoginDTO = {
@@ -68,6 +70,8 @@ export default function Login(props: any) {
             loginPassword: password,
           },
         });
+        setAsyncStorage(STORAGE_KEY.FB_ID, fbID);
+        
         navigation.navigate('Dashboard');
       } else {
         Alert.alert('Something went wrong', 'Invalid credentials');
