@@ -148,3 +148,15 @@ export const editContactInformation = async (
 
   return result;
 };
+
+export const removeContactInformation = async (
+  activeUserID: string,
+  contactInformationRecord: ContactDTO[],
+) => {
+  const result = await firestore()
+    .collection('Contacts')
+    .doc(activeUserID)
+    .update({contacts: contactInformationRecord});
+
+  return result;
+};
