@@ -2,15 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import TextLabel from '../../../components/TextLabel';
 import {useFirstAid} from '../../../hooks/useFirstAidHooks';
-import {FirstAidDTO} from '../../../types/FirstAid.type';
 import {convertFirstCharacterOfWordToUpperCase} from '../../../utils/format-display';
 import {
   APP_FONT_SIZE,
-  APP_MARGIN,
   APP_PADDING,
 } from '../../../constants/number';
-import DivComponent from '../../../components/DivContainer';
 import DividerComponent from '../../../components/Divider';
+import { APP_HEIGHT } from '../../../constants/dimensions';
 
 export default function FirstAidInformation(props: any) {
   const {firstAidID, firstAidTitle} = props.route.params;
@@ -39,14 +37,13 @@ export default function FirstAidInformation(props: any) {
   }, []);
   return (
     <View>
-      <View style={{padding: APP_PADDING.TEN}}>
+      <View style={{padding: APP_PADDING.TEN, height: APP_HEIGHT-70}}>
         <TextLabel
           title={convertFirstCharacterOfWordToUpperCase(firstAidTitle)}
           textAlign="center"
           fontSize={APP_FONT_SIZE.TWENTY_FIVE}
         />
         <FlatList data={specificFirstAid} renderItem={renderFirstAidList} />
-        <View style={{marginBottom: APP_MARGIN.ONE}} />
       </View>
     </View>
   );
