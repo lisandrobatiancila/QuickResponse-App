@@ -10,9 +10,10 @@ import TextLabel from '../../components/TextLabel';
 import {LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
-import {Formik} from 'formik';
+import {Formik, validateYupSchema} from 'formik';
 import {useAccountContext} from '../../providers/AccountProvider';
 import {useUserCredentials} from '../../hooks/useUserHooks';
+import * as Yup from 'yup';
 
 export default function Login(props: any) {
   const initValues: LoginDTO = {
@@ -22,6 +23,12 @@ export default function Login(props: any) {
   const {navigation} = props;
   const {setActiveUserInformationFunction} = useAccountContext();
   const {sendLoginQRUser} = useUserCredentials();
+  const loginValidationSchema = Yup.object().shape({
+    loginEmail: Yup.string()
+      .email('Invalid email')
+      .required('Email is required'),
+    loginPassword: Yup.string().required('Password is required'),
+  });
 
   const onSignup = () => {
     navigation.navigate('Register');
@@ -76,10 +83,10 @@ export default function Login(props: any) {
         <ImageComponent
           imageSrc={require('../../assets/QRApp-img2.jpeg')}
           width={APP_WIDTH}
-          height={200}
           borderRadius={50}
+          height={200}
         />
-        <View style={{height: APP_HEIGHT / 2}}>
+        <View>
           <DividerComponent margin="40px 0 0 0" />
           <TextComponent
             title="Log In Now"
@@ -92,11 +99,18 @@ export default function Login(props: any) {
             initialValues={initValues}
             onSubmit={values => {
               onLoginUser(values);
-            }}>
-            {({handleSubmit, handleChange, values}) => (
+            }}
+            validationSchema={loginValidationSchema}>
+            {({handleSubmit, handleChange, values, errors}) => (
               <>
                 <DivComponent padding="10">
                   <DividerComponent margin="20px 0 0 0" />
+                  {errors?.loginEmail && (
+                    <TextLabel
+                      title={`${errors?.loginEmail}`}
+                      textColor={COLOR_LISTS.RED}
+                    />
+                  )}
                   <TextInputComponent
                     label="Email"
                     borderRadius={10}
@@ -105,6 +119,13 @@ export default function Login(props: any) {
                     keyboardType={'email-address'}
                     onChangeText={handleChange('loginEmail')}
                   />
+                  {errors?.loginPassword && (
+                    <TextLabel
+                      title={`${errors?.loginPassword}`}
+                      textColor={COLOR_LISTS.RED}
+                    />
+                  )}
+
                   <TextInputComponent
                     label="Password"
                     borderRadius={10}

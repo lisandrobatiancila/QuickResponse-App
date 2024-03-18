@@ -11,6 +11,7 @@ import {Formik} from 'formik';
 import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {AllergyDTO} from '../../../../types/User.type';
+import * as Yup from 'yup';
 
 export default function AddNewAllergies() {
   const initValues: AllergyDTO = {
@@ -18,6 +19,9 @@ export default function AddNewAllergies() {
   };
   const {sendAddNewAllergies} = useUserProfile();
   const {activeUserInformation} = useAccountContext();
+  const allergyValidationSchema = Yup.object().shape({
+    allergy: Yup.string().required('Please specify allergy.'),
+  });
 
   const onSaveAllergy = async (values: AllergyDTO) => {
     await sendAddNewAllergies(
@@ -42,9 +46,16 @@ export default function AddNewAllergies() {
         onSubmit={(values: AllergyDTO, {resetForm}) => {
           onSaveAllergy(values);
           resetForm();
-        }}>
-        {({handleSubmit, handleChange, values}) => (
+        }}
+        validationSchema={allergyValidationSchema}>
+        {({handleSubmit, handleChange, values, errors}) => (
           <>
+            {errors?.allergy && (
+              <TextLabel
+                title={`${errors?.allergy}`}
+                textColor={COLOR_LISTS.RED}
+              />
+            )}
             <TextInputComponent
               textMode={TextInputEnum.OUTLINED}
               label="Allergies"

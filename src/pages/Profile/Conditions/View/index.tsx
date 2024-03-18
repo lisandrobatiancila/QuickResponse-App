@@ -25,25 +25,29 @@ export default function ViewCondition() {
   }, []);
 
   const listOfConditions = useMemo(() => {
-    return conditionRecords.map((record: any, i: number) => {
-      return (
-        <View key={i}>
-          <DividerComponent margin="3px 0 0 0" />
-          <ButtonComponent
-            title={record}
-            key={i}
-            backgroundColor={COLOR_LISTS.RED_400}
-            textAlign="center"
-            fontSize={20}
-            alignSelf="center"
-            padding="5"
-            borderRadius="5"
-            textColor={COLOR_LISTS.WHITE}
-            width={80}
-          />
-        </View>
-      );
-    });
+    if (conditionRecords) {
+      return conditionRecords.map((record: any, i: number) => {
+        return (
+          <View key={i}>
+            <DividerComponent margin="3px 0 0 0" />
+            <ButtonComponent
+              title={record}
+              key={i}
+              backgroundColor={COLOR_LISTS.RED_400}
+              textAlign="center"
+              fontSize={20}
+              alignSelf="center"
+              padding="5"
+              borderRadius="5"
+              textColor={COLOR_LISTS.WHITE}
+              width={80}
+            />
+          </View>
+        );
+      });
+    } else {
+      return <TextLabel title="No condition records." />;
+    }
   }, [conditionRecords]);
 
   return (

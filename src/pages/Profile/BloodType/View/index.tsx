@@ -34,7 +34,7 @@ export default function ViewBloodType() {
         <TextLabel title="Your BloodType is" fontSize={20} textAlign="center" />
         <DividerComponent margin="10px 0 0 0" />
         <TextLabel
-          title={bloodTypeRecord?.bloodType}
+          title={bloodTypeRecord?.bloodType ?? 'N/A'}
           textAlign="center"
           fontSize={80}
           textColor={COLOR_LISTS.RED_400}
