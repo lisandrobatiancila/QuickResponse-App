@@ -1,4 +1,5 @@
 export const COLOR_LISTS = {
+  BLACK: '#000',
   BLUE: '#2196f3',
   BLUE_400: '#42a5f5',
   BLUE_500: '#2196f3',

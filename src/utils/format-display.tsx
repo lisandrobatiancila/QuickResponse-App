@@ -9,4 +9,19 @@ export const formatPasswordDisplay = (password?: string) => {
     }
 
     return firstFiveCharacters;
-}
+};
+
+export const convertFirstCharacterOfWordToUpperCase = (param: string) => {
+    const splittedWord: string[] = param.split(" ");
+    const wordLen = splittedWord.length;
+    let newWord: string = "";
+
+    for(let i = 0; i < wordLen; i++) {
+        const firstCharacter = splittedWord[i].substring(0, 1).toUpperCase();
+        const secondToLastCharacter = splittedWord[i].substring(1, splittedWord[i].length);
+        
+        newWord += firstCharacter+secondToLastCharacter+" ";
+    }
+
+    return newWord;
+};

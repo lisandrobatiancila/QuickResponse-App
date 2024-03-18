@@ -2,11 +2,13 @@ import React, {ChangeEvent} from 'react';
 import * as S from './style';
 import TextInputEnum from '../../enums/TextInput.enum';
 import {KeyboardTypeOptions} from 'react-native';
+import { COLOR_LISTS } from '../../constants/colors';
 
 type TextInputComponentProps = {
   label?: string;
   borderRadius?: number;
   textMode: TextInputEnum;
+  textColor?: string;
   value?: string;
   height?: string;
   onChangeText?: (param: string | ChangeEvent<Element>) => void;
@@ -20,6 +22,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
     label,
     borderRadius,
     textMode,
+    textColor,
     value,
     height,
     onChangeText,
@@ -40,6 +43,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
       keyboardType={keyboardType ?? 'default'}
       height={height}
       disabled={disabled}
+      textColor={textColor ?? COLOR_LISTS.BLACK}
       maxLength={maxLength}
     />
   );
