@@ -15,6 +15,7 @@ type TextInputComponentProps = {
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
   disabled?: boolean;
+  maxLength?: number
 };
 export default function TextInputComponent(props: TextInputComponentProps) {
   const {
@@ -27,7 +28,8 @@ export default function TextInputComponent(props: TextInputComponentProps) {
     onChangeText,
     secureTextEntry,
     keyboardType,
-    disabled
+    disabled,
+    maxLength
   } = props;
 
   return (
@@ -42,6 +44,7 @@ export default function TextInputComponent(props: TextInputComponentProps) {
       height={height}
       disabled={disabled}
       textColor={textColor ?? COLOR_LISTS.BLACK}
+      maxLength={maxLength}
     />
   );
 }
