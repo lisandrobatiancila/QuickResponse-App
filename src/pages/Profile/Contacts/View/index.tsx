@@ -11,6 +11,7 @@ import DivComponent from '../../../../components/DivContainer';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DividerComponent from '../../../../components/Divider';
 import EditContacts from '../Edit';
+import {APP_FONT_SIZE} from '../../../../constants/number';
 
 export default function ViewContacts() {
   const {sendGetAllContacts, deleteContactInformation} = useUserProfile();
@@ -106,7 +107,11 @@ export default function ViewContacts() {
     } else {
       return (
         <DivComponent>
-          <TextLabel title="No contact records." />
+          <DividerComponent margin="20px 0 0 0" />
+          <TextLabel
+            title="No contact records."
+            fontSize={APP_FONT_SIZE.FIFTEN}
+          />
         </DivComponent>
       );
     }
@@ -123,7 +128,7 @@ export default function ViewContacts() {
         }}>
         <TextLabel
           title={!isEditAction ? 'List of all contacts' : 'Edit contacts'}
-          fontSize={20}
+          fontSize={APP_FONT_SIZE.TWENTY_FIVE}
           textAlign="center"
         />
         {!isEditAction && listOfContacts}

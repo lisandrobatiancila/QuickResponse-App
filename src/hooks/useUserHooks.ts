@@ -24,11 +24,11 @@ export const useUserCredentials = () => {
     activeUserID: string,
     profileInformation: UpdateProfileDTO,
     hasChangedPassword: any,
-  ) => {    
+  ) => {
     const record = await updateUserInformation(
       activeUserID,
       profileInformation,
-      hasChangedPassword
+      hasChangedPassword,
     );
 
     return record;

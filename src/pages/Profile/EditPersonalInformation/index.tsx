@@ -8,15 +8,15 @@ import * as S from './style';
 import {ButtonComponent} from '../../../components/Buttons';
 import {COLOR_LISTS} from '../../../constants/colors';
 import DividerComponent from '../../../components/Divider';
-import {formatPasswordDisplay} from '../../../utils/format-display';
 import {UpdateProfileDTO} from '../../../types/User.type';
 import {useUserCredentials} from '../../../hooks/useUserHooks';
 import * as Yup from 'yup';
 import TextLabel from '../../../components/TextLabel';
-import { Alert, ToastAndroid } from 'react-native';
+import {Alert, ToastAndroid} from 'react-native';
 
 export default function EditPersonalInformationComponent(props: any) {
-  const {activeUserInformation, setActiveUserInformationFunction} = useAccountContext();
+  const {activeUserInformation, setActiveUserInformationFunction} =
+    useAccountContext();
   const {sendUpdateInfromationOfQRUser} = useUserCredentials();
 
   const initValues = {
@@ -29,27 +29,37 @@ export default function EditPersonalInformationComponent(props: any) {
     firstname: Yup.string().required('Firstname is required'),
     middlename: Yup.string().required('Middlename is required'),
     lastname: Yup.string().required('Lastname is required'),
-    mobilenumber: Yup.string().required('Mobile number is required')
+    mobilenumber: Yup.string().required('Mobile number is required'),
   });
 
   const onUpdateUserPersonalInformation = async (values: UpdateProfileDTO) => {
     let hasChangedPassword = values.password;
-    
-    try{
+
+    try {
       const result = await sendUpdateInfromationOfQRUser(
         JSON.parse(activeUserInformation?.account?.fbID ?? ''),
         values,
-        hasChangedPassword
+        hasChangedPassword,
       );
-      
-      if(result) {
-        setActiveUserInformationFunction({credentials: {loginPassword: result.hashPassword}});
+
+      if (result) {
+        setActiveUserInformationFunction({
+          account: {
+            firstname: values.firstname,
+            middlename: values.middlename,
+            lastname: values.lastname,
+            mobilenumber: values.mobilenumber,
+          },
+          credentials: {
+            loginEmail: values.email,
+            loginPassword: result.hashPassword,
+          },
+        });
       }
-      
+
       ToastAndroid.show('Account information was updated!', ToastAndroid.SHORT);
       props.navigation.goBack();
-    }
-    catch(error) {
+    } catch (error) {
       console.log(error);
       Alert.alert('Error', 'Something went wrong!');
     }
@@ -59,7 +69,7 @@ export default function EditPersonalInformationComponent(props: any) {
     <S.PersonalInformationContainer>
       <DivComponent padding="10">
         <Formik
-        validationSchema={editProfileSchema}
+          validationSchema={editProfileSchema}
           initialValues={initValues}
           onSubmit={values => {
             onUpdateUserPersonalInformation(values as UpdateProfileDTO);
@@ -67,7 +77,12 @@ export default function EditPersonalInformationComponent(props: any) {
           {({handleSubmit, handleChange, values, errors}) => (
             <>
               <DividerComponent margin="10px 0 0 0" />
-              {errors?.firstname && <TextLabel title={errors?.firstname} textColor={COLOR_LISTS.RED} />}
+              {errors?.firstname && (
+                <TextLabel
+                  title={errors?.firstname}
+                  textColor={COLOR_LISTS.RED}
+                />
+              )}
               <TextInputComponent
                 label="Firstname"
                 textMode={TextInputEnum.OUTLINED}
@@ -75,7 +90,12 @@ export default function EditPersonalInformationComponent(props: any) {
                 onChangeText={handleChange('firstname')}
               />
               <DividerComponent margin="10px 0 0 0" />
-              {errors?.middlename && <TextLabel title={errors?.middlename} textColor={COLOR_LISTS.RED} />}
+              {errors?.middlename && (
+                <TextLabel
+                  title={errors?.middlename}
+                  textColor={COLOR_LISTS.RED}
+                />
+              )}
               <TextInputComponent
                 label="Middlename"
                 textMode={TextInputEnum.OUTLINED}
@@ -83,7 +103,12 @@ export default function EditPersonalInformationComponent(props: any) {
                 onChangeText={handleChange('middlename')}
               />
               <DividerComponent margin="10px 0 0 0" />
-              {errors?.lastname && <TextLabel title={errors?.lastname} textColor={COLOR_LISTS.RED} />}
+              {errors?.lastname && (
+                <TextLabel
+                  title={errors?.lastname}
+                  textColor={COLOR_LISTS.RED}
+                />
+              )}
               <TextInputComponent
                 label="Lastname"
                 textMode={TextInputEnum.OUTLINED}
@@ -91,7 +116,12 @@ export default function EditPersonalInformationComponent(props: any) {
                 onChangeText={handleChange('lastname')}
               />
               <DividerComponent margin="10px 0 0 0" />
-              {errors?.mobilenumber && <TextLabel title={errors?.mobilenumber} textColor={COLOR_LISTS.RED} />}
+              {errors?.mobilenumber && (
+                <TextLabel
+                  title={errors?.mobilenumber}
+                  textColor={COLOR_LISTS.RED}
+                />
+              )}
               <TextInputComponent
                 label="Mobilenumber"
                 textMode={TextInputEnum.OUTLINED}

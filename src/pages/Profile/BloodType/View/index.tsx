@@ -7,6 +7,7 @@ import {useUserProfile} from '../../../../hooks/profileUserHooks';
 import {useAccountContext} from '../../../../providers/AccountProvider';
 import {BloodTypeDTO} from '../../../../types/User.type';
 import DividerComponent from '../../../../components/Divider';
+import {APP_FONT_SIZE} from '../../../../constants/number';
 
 export default function ViewBloodType() {
   const {sendGetBloodType} = useUserProfile();
@@ -31,7 +32,11 @@ export default function ViewBloodType() {
           height: APP_HEIGHT / 2,
           padding: 10,
         }}>
-        <TextLabel title="Your BloodType is" fontSize={20} textAlign="center" />
+        <TextLabel
+          title="Your BloodType is"
+          fontSize={APP_FONT_SIZE.TWENTY_FIVE}
+          textAlign="center"
+        />
         <DividerComponent margin="10px 0 0 0" />
         <TextLabel
           title={bloodTypeRecord?.bloodType ?? 'N/A'}

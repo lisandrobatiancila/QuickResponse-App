@@ -8,6 +8,7 @@ import {useAccountContext} from '../../../../providers/AccountProvider';
 import {AllergyDTO} from '../../../../types/User.type';
 import {ButtonComponent} from '../../../../components/Buttons';
 import DividerComponent from '../../../../components/Divider';
+import {APP_FONT_SIZE} from '../../../../constants/number';
 
 export default function ViewCondition() {
   const {sendGetAllConditions} = useUserProfile();
@@ -46,7 +47,15 @@ export default function ViewCondition() {
         );
       });
     } else {
-      return <TextLabel title="No condition records." />;
+      return (
+        <>
+          <DividerComponent margin="20px 0 0 0" />
+          <TextLabel
+            title="No condition records."
+            fontSize={APP_FONT_SIZE.FIFTEN}
+          />
+        </>
+      );
     }
   }, [conditionRecords]);
 
@@ -60,8 +69,8 @@ export default function ViewCondition() {
           padding: 10,
         }}>
         <TextLabel
-          title="List of all allergies"
-          fontSize={20}
+          title="List of all conditions"
+          fontSize={APP_FONT_SIZE.TWENTY_FIVE}
           textAlign="center"
         />
         {listOfConditions}

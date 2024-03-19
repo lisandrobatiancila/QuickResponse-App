@@ -4,12 +4,12 @@ import {ButtonComponent} from '../../components/Buttons';
 import * as S from './style';
 import {APP_WIDTH} from '../../constants/dimensions';
 import ImageComponent from '../../components/ImageContainer';
-import { COLOR_LISTS } from '../../constants/colors';
-import { useEffect, useState } from 'react';
-import { getAsyncStorage } from '../../utils/utility';
-import { STORAGE_KEY } from '../../constants/string';
-import { useUserCredentials } from '../../hooks/useUserHooks';
-import { useAccountContext } from '../../providers/AccountProvider';
+import {COLOR_LISTS} from '../../constants/colors';
+import {useEffect} from 'react';
+import {getAsyncStorage} from '../../utils/utility';
+import {STORAGE_KEY} from '../../constants/string';
+import {useUserCredentials} from '../../hooks/useUserHooks';
+import {useAccountContext} from '../../providers/AccountProvider';
 
 export default function Home(props: any) {
   const {navigation} = props;
@@ -17,14 +17,14 @@ export default function Home(props: any) {
   const {setActiveUserInformationFunction} = useAccountContext();
 
   const checkIfUserHasLoggedInAlready = async () => {
-    try{
-      const fbID: string = await getAsyncStorage(STORAGE_KEY.FB_ID) as string;
-      
+    try {
+      const fbID: string = (await getAsyncStorage(STORAGE_KEY.FB_ID)) as string;
+
       if (fbID) {
         const result = await sendActiveUserInformation(fbID);
         const record = result.data();
         const account = result.data()?.account;
-        
+
         if (!record?.isActive) {
           Alert.alert('Inactive', 'Your account is inactive');
           return;
@@ -42,16 +42,15 @@ export default function Home(props: any) {
           credentials: {
             loginEmail: record?.email,
             loginPassword: record?.password,
-          }
-        })
+          },
+        });
         navigation.navigate('Dashboard');
       }
       return;
-    }
-    catch(error) {
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   function onGetStarted() {
     navigation.navigate('Login');
