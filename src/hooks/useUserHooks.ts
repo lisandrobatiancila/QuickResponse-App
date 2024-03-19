@@ -1,6 +1,7 @@
 import {
   loginUser,
   registrationUser,
+  setActiveUserInformation,
   updateUserInformation,
 } from '../service/registration/User.service';
 import {RegistrationDTO} from '../types/Registration.type';
@@ -22,18 +23,27 @@ export const useUserCredentials = () => {
   const sendUpdateInfromationOfQRUser = async (
     activeUserID: string,
     profileInformation: UpdateProfileDTO,
-  ) => {
+    hasChangedPassword: any,
+  ) => {    
     const record = await updateUserInformation(
       activeUserID,
       profileInformation,
+      hasChangedPassword
     );
 
     return record;
+  };
+
+  const sendActiveUserInformation = async (fbID: string) => {
+    const result = await setActiveUserInformation(fbID);
+
+    return result;
   };
 
   return {
     sendRegisterQRUser,
     sendLoginQRUser,
     sendUpdateInfromationOfQRUser,
+    sendActiveUserInformation,
   };
 };
