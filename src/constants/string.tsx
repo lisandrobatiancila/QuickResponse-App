@@ -40,5 +40,6 @@ export enum TextAlignmentEnum {
 };
 
 export const STORAGE_KEY = {
+  ACTIVE_USER_EMAIL: 'ACTIVE_USER_EMAIL',
   FB_ID: 'FB_ID'
 };

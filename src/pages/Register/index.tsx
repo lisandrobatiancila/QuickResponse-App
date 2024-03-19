@@ -75,7 +75,7 @@ export default function Registration(props: any) {
         <Formik
           initialValues={initValues}
           onSubmit={(values, {resetForm}) => {
-            resetForm();
+            // resetForm();
             onRegister(values);
           }}
           validationSchema={registrationValidationSchema}>

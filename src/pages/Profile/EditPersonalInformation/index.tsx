@@ -30,36 +30,27 @@ export default function EditPersonalInformationComponent(props: any) {
     middlename: Yup.string().required('Middlename is required'),
     lastname: Yup.string().required('Lastname is required'),
     mobilenumber: Yup.string().required('Mobile number is required')
-  })
+  });
 
-  const onUpdateUserPersonalInformation = (values: UpdateProfileDTO) => {
-    let hasChangedPassword: boolean = values.password !== activeUserInformation?.credentials?.loginPassword;
-
+  const onUpdateUserPersonalInformation = async (values: UpdateProfileDTO) => {
+    let hasChangedPassword = values.password;
+    
     try{
-      setActiveUserInformationFunction({
-        account: {
-          fbID: activeUserInformation?.account?.fbID,
-          profile: activeUserInformation?.account?.profile || "",
-          firstname: values.firstname,
-          middlename: values.middlename,
-          lastname: values.lastname,
-          mobilenumber: values.mobilenumber,
-          address: activeUserInformation?.account?.address || "",
-        },
-        credentials: {
-          loginEmail: activeUserInformation?.credentials?.loginEmail || "",
-          loginPassword: ""
-        }
-      });
-      sendUpdateInfromationOfQRUser(
-        activeUserInformation?.account?.fbID ?? '',
+      const result = await sendUpdateInfromationOfQRUser(
+        JSON.parse(activeUserInformation?.account?.fbID ?? ''),
         values,
         hasChangedPassword
       );
+      
+      if(result) {
+        setActiveUserInformationFunction({credentials: {loginPassword: result.hashPassword}});
+      }
+      
       ToastAndroid.show('Account information was updated!', ToastAndroid.SHORT);
       props.navigation.goBack();
     }
     catch(error) {
+      console.log(error);
       Alert.alert('Error', 'Something went wrong!');
     }
   };

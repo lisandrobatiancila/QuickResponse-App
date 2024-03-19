@@ -23,8 +23,8 @@ export const useUserCredentials = () => {
   const sendUpdateInfromationOfQRUser = async (
     activeUserID: string,
     profileInformation: UpdateProfileDTO,
-    hasChangedPassword: boolean,
-  ) => {
+    hasChangedPassword: any,
+  ) => {    
     const record = await updateUserInformation(
       activeUserID,
       profileInformation,

@@ -44,9 +44,7 @@ export default function ProfileDashBoard(props: any) {
     getDoMedicalAidInformation();
   }, []);
 
-  useEffect(() => {
-    console.log(props.route.name);
-    
+  useEffect(() => {    
     if (!isRemoteFile) {
       setImage(require('../../assets/QRApp-img1.jpeg'));
     }

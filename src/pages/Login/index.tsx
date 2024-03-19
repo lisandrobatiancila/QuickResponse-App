@@ -70,6 +70,7 @@ export default function Login(props: any) {
             loginPassword: password,
           },
         });
+        setAsyncStorage(STORAGE_KEY.ACTIVE_USER_EMAIL, email);
         setAsyncStorage(STORAGE_KEY.FB_ID, fbID);
         
         navigation.navigate('Dashboard');
