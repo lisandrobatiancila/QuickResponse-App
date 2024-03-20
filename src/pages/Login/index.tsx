@@ -1,7 +1,7 @@
 import React, {View, ScrollView, Alert} from 'react-native';
 import TextComponent from '../../components/TextLabel';
 import ImageComponent from '../../components/ImageContainer';
-import {APP_HEIGHT, APP_WIDTH} from '../../constants/dimensions';
+import {APP_WIDTH} from '../../constants/dimensions';
 import {ButtonComponent} from '../../components/Buttons';
 import TextInputComponent from '../../components/TextInput';
 import TextInputEnum from '../../enums/TextInput.enum';
@@ -10,12 +10,12 @@ import TextLabel from '../../components/TextLabel';
 import {LoginDTO, UserDTO} from '../../types/User.type';
 import DividerComponent from '../../components/Divider';
 import {COLOR_LISTS} from '../../constants/colors';
-import {Formik, validateYupSchema} from 'formik';
+import {Formik} from 'formik';
 import {useAccountContext} from '../../providers/AccountProvider';
 import {useUserCredentials} from '../../hooks/useUserHooks';
 import * as Yup from 'yup';
-import { setAsyncStorage } from '../../utils/utility';
-import { STORAGE_KEY } from '../../constants/string';
+import {setAsyncStorage} from '../../utils/utility';
+import {STORAGE_KEY} from '../../constants/string';
 
 export default function Login(props: any) {
   const initValues: LoginDTO = {
@@ -55,9 +55,11 @@ export default function Login(props: any) {
           Alert.alert('Oops', 'Your account is inactive.');
           return;
         }
+        const stringifyFBID = JSON.stringify(fbID);
+
         setActiveUserInformationFunction({
           account: {
-            fbID,
+            fbID: stringifyFBID,
             profile,
             firstname,
             middlename,
@@ -72,7 +74,7 @@ export default function Login(props: any) {
         });
         setAsyncStorage(STORAGE_KEY.ACTIVE_USER_EMAIL, email);
         setAsyncStorage(STORAGE_KEY.FB_ID, fbID);
-        
+
         navigation.navigate('Dashboard');
       } else {
         Alert.alert('Something went wrong', 'Invalid credentials');

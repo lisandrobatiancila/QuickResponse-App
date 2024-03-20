@@ -1,10 +1,8 @@
-import { useAccountContext } from '../../providers/AccountProvider';
 import {RegistrationDTO} from '../../types/Registration.type';
 import {LoginDTO, UpdateProfileDTO, UserDTO} from '../../types/User.type';
 import firestore from '@react-native-firebase/firestore';
 import {sha256} from 'react-native-sha256';
-import { validateIfUserExists } from '../../utils/utility';
-import { Alert } from 'react-native';
+import {validateIfUserExists} from '../../utils/utility';
 
 export const registrationUser = async (loginFormValues: RegistrationDTO) => {
   const {
@@ -21,12 +19,12 @@ export const registrationUser = async (loginFormValues: RegistrationDTO) => {
   const sha256Password = await sha256(password);
 
   const isUserExists = await validateIfUserExists(email);
-  if(isUserExists) {
-    Alert.alert('Oops', `email '${email}' already exists. `)
-    return;
+
+  if (isUserExists) {
+    return true;
   }
-  
-  const users = await firestore().collection('Users').add({
+
+  await firestore().collection('Users').add({
     email,
     password: sha256Password,
     isActive,
@@ -40,7 +38,7 @@ export const registrationUser = async (loginFormValues: RegistrationDTO) => {
     },
   });
 
-  return users;
+  return false;
 };
 
 export const loginUser = async (
@@ -59,7 +57,7 @@ export const loginUser = async (
   activeUser.account.fbID = results?.docs[0]?.id;
   const {password} = activeUser;
 
-  const loginPassSha256 = await sha256(loginPassword ?? "");
+  const loginPassSha256 = await sha256(loginPassword ?? '');
 
   if (loginPassSha256 !== password) {
     return {} as UserDTO;
@@ -71,11 +69,11 @@ export const loginUser = async (
 export const updateUserInformation = async (
   activeUserID: string,
   profileInformation: UpdateProfileDTO,
-  hasChangedPassword: any
+  hasChangedPassword: any,
 ): Promise<{hashPassword: string} | undefined> => {
   const {firstname, middlename, lastname, mobilenumber} = profileInformation;
   let result = null;
-  
+
   if (hasChangedPassword) {
     const {password} = profileInformation;
     let hashPassword = await sha256(password);
@@ -91,7 +89,7 @@ export const updateUserInformation = async (
     });
 
     return {hashPassword};
-  } else {    
+  } else {
     result = await firestore().collection('Users').doc(activeUserID).update({
       account: {
         firstname,
@@ -104,8 +102,11 @@ export const updateUserInformation = async (
   }
 };
 
-export const setActiveUserInformation = async (id: string) => {  
-  const record = await firestore().collection('Users').doc(JSON.parse(id)).get();
-  
+export const setActiveUserInformation = async (id: string) => {
+  const record = await firestore()
+    .collection('Users')
+    .doc(JSON.parse(id))
+    .get();
+
   return record;
 };

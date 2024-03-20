@@ -43,15 +43,15 @@ export default function Registration(props: any) {
   const onRegister = async (values: RegistrationDTO) => {
     try {
       const result = await sendRegisterQRUser(values);
-      if (result) {
+
+      if (!result) {
         ToastAndroid.show(
           'Your registration was successful!',
           ToastAndroid.SHORT,
         );
         props.navigation.navigate('Login');
-      }
-      else {
-        // user already exists
+      } else {
+        Alert.alert('Oops', `'${values.email}' already exists`);
       }
     } catch (error: any) {
       Alert.alert('Something went wrong', error?.message);
@@ -75,7 +75,7 @@ export default function Registration(props: any) {
         <Formik
           initialValues={initValues}
           onSubmit={(values, {resetForm}) => {
-            // resetForm();
+            resetForm();
             onRegister(values);
           }}
           validationSchema={registrationValidationSchema}>

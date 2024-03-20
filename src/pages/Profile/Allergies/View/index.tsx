@@ -8,6 +8,7 @@ import {useAccountContext} from '../../../../providers/AccountProvider';
 import {AllergyDTO} from '../../../../types/User.type';
 import {ButtonComponent} from '../../../../components/Buttons';
 import DividerComponent from '../../../../components/Divider';
+import {APP_FONT_SIZE} from '../../../../constants/number';
 
 export default function ViewAllergies() {
   const {sendGetAllAllergies} = useUserProfile();
@@ -46,7 +47,15 @@ export default function ViewAllergies() {
         );
       });
     } else {
-      return <TextLabel title="No allergy record exists." />;
+      return (
+        <>
+          <DividerComponent margin="20px 0 0 0 " />
+          <TextLabel
+            title="No allergy record exists"
+            fontSize={APP_FONT_SIZE.FIFTEN}
+          />
+        </>
+      );
     }
   }, [allergyRecords]);
 
@@ -61,7 +70,7 @@ export default function ViewAllergies() {
         }}>
         <TextLabel
           title="List of all allergies"
-          fontSize={20}
+          fontSize={APP_FONT_SIZE.TWENTY_FIVE}
           textAlign="center"
         />
         {listOfAllergies}
